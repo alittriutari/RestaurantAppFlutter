@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
       theme: ThemeData(
           appBarTheme: const AppBarTheme(elevation: 0),
