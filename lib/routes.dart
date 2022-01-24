@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/detail_restaurant.dart';
 import 'package:restaurant_app/home_page.dart';
+import 'package:restaurant_app/restaurant.dart';
 import 'package:restaurant_app/splash.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -8,6 +10,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => SplashPage());
     case HomePage.routeName:
       return MaterialPageRoute(builder: (context) => HomePage());
+    case DetailRestaurant.routeName:
+      return MaterialPageRoute(
+          builder: (context) => DetailRestaurant(
+                id: ModalRoute.of(context)?.settings.arguments as int,
+              ));
     default:
       return MaterialPageRoute(builder: (context) => SplashPage());
   }

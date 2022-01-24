@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:restaurant_app/detail_restaurant.dart';
 import 'package:restaurant_app/restaurant.dart';
 import 'package:restaurant_app/styles.dart';
 
@@ -32,44 +33,49 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          restaurantList.restaurants[index].pictureId,
-                          fit: BoxFit.fill,
-                          width: 120,
-                          height: 100,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, DetailRestaurant.routeName, arguments: restaurantList.restaurants);
+                    },
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            restaurantList.restaurants[index].pictureId,
+                            fit: BoxFit.fill,
+                            width: 120,
+                            height: 100,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            restaurantList.restaurants[index].name,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          const SizedBox(height: 5),
-                          RatingBarIndicator(
-                            rating: restaurantList.restaurants[index].rating,
-                            itemCount: 5,
-                            itemSize: 15.0,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: secondaryColor,
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              restaurantList.restaurants[index].name,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
-                          ),
-                          const SizedBox(height: 30),
-                          Text(restaurantList.restaurants[index].city),
-                        ],
-                      )
-                    ],
+                            const SizedBox(height: 5),
+                            RatingBarIndicator(
+                              rating: restaurantList.restaurants[index].rating,
+                              itemCount: 5,
+                              itemSize: 15.0,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: secondaryColor,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Text(restaurantList.restaurants[index].city),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
