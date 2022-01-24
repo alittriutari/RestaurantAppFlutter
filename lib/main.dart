@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/routes.dart' as router;
+
 import 'package:restaurant_app/splash.dart';
 import 'styles.dart';
 
@@ -14,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
+      onGenerateRoute: router.generateRoute,
       theme: ThemeData(
           appBarTheme: const AppBarTheme(elevation: 0),
           elevatedButtonTheme: ElevatedButtonThemeData(

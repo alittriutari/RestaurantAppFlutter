@@ -1,13 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
+  static const String routeName = '/';
 
   @override
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, HomePage.routeName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
