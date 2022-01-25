@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/detail_restaurant.dart';
+import 'package:restaurant_app/home_page.dart';
+import 'package:restaurant_app/restaurant.dart';
 import 'package:restaurant_app/routes.dart' as router;
 
 import 'package:restaurant_app/splash.dart';
@@ -16,14 +19,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
-      onGenerateRoute: router.generateRoute,
+      // onGenerateRoute: router.generateRoute,
       theme: ThemeData(
           appBarTheme: const AppBarTheme(elevation: 0),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                   primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
           colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
-      home: const SplashPage(),
+      // home: const SplashPage(),
+      routes: {
+        SplashPage.routeName: (context) => const SplashPage(),
+        HomePage.routeName: (context) => const HomePage(),
+        DetailRestaurant.routeName: (context) => DetailRestaurant(restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant),
+      },
     );
   }
 }

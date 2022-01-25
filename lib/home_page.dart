@@ -7,8 +7,9 @@ import 'package:restaurant_app/restaurant.dart';
 import 'package:restaurant_app/styles.dart';
 
 class HomePage extends StatefulWidget {
+  static const routeName = '/home_page';
   const HomePage({Key? key}) : super(key: key);
-  static const String routeName = '/home';
+  // static const String routeName = '/home';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final restaurantList = Restaurant.fromJson(jsonDecode(snapshot.data!));
+
             return ListView.builder(
               itemCount: restaurantList.restaurants.length,
               itemBuilder: (context, index) {
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, DetailRestaurant.routeName, arguments: restaurantList.restaurants);
+                      Navigator.pushNamed(context, DetailRestaurant.routeName, arguments: restaurantList);
                     },
                     child: Row(
                       children: [
