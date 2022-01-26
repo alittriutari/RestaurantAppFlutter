@@ -99,14 +99,3 @@ class Drink {
         "name": name,
       };
 }
-
-List<Restaurant> parseRestaurants(String? json) {
-  if (json == null) {
-    return [];
-  }
-
-  final List parsed = jsonDecode(json);
-
-  print(parsed);
-  return parsed.map((json) => Restaurant.fromJson(json)).toList();
-}

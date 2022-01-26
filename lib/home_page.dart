@@ -18,7 +18,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -28,7 +27,8 @@ class _HomePageState extends State<HomePage> {
         future: DefaultAssetBundle.of(context).loadString('assets/file/local_restaurant.json'),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final restaurantList = Restaurant.fromJson(jsonDecode(snapshot.data!));
+            final jsonResult = jsonDecode(snapshot.data!);
+            var restaurantList = restaurantFromJson(jsonEncode(jsonResult));
 
             return ListView.builder(
               itemCount: restaurantList.restaurants.length,
@@ -37,7 +37,13 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, DetailRestaurant.routeName, arguments: restaurantList);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailRestaurant(
+                              restaurant: restaurantList.restaurants[index],
+                            ),
+                          ));
                     },
                     child: Row(
                       children: [
@@ -46,8 +52,8 @@ class _HomePageState extends State<HomePage> {
                           child: Image.network(
                             restaurantList.restaurants[index].pictureId,
                             fit: BoxFit.fill,
-                            width: 120,
-                            height: 100,
+                            width: 100,
+                            height: 80,
                           ),
                         ),
                         const SizedBox(

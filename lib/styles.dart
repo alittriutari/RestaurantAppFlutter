@@ -20,3 +20,19 @@ final TextTheme myTheme = TextTheme(
   caption: GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
   overline: GoogleFonts.openSans(fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
 );
+
+List<BoxShadow> defaultBoxShadow({
+  Color? shadowColor,
+  double? blurRadius,
+  double? spreadRadius,
+  Offset offset = const Offset(0.0, 0.0),
+}) {
+  return [
+    BoxShadow(
+      color: shadowColor ?? Colors.grey.withOpacity(0.2),
+      blurRadius: blurRadius ?? 4,
+      spreadRadius: spreadRadius ?? 1.0,
+      offset: offset,
+    )
+  ];
+}
