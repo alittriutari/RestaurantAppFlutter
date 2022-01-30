@@ -34,9 +34,12 @@ class DetailRestaurant extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.bottomRight,
                     children: <Widget>[
-                      Image.network(
-                        restaurant.pictureId,
-                        fit: BoxFit.cover,
+                      Hero(
+                        tag: restaurant.pictureId,
+                        child: Image.network(
+                          restaurant.pictureId,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ],
                   ),
@@ -49,82 +52,84 @@ class DetailRestaurant extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(restaurant.name, style: Theme.of(context).textTheme.headline3),
-                    smallSpacing(),
-                    Row(
-                      children: [
-                        const Icon(Icons.location_on),
-                        Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
-                      ],
-                    ),
-                    smallSpacing(),
-                    RatingBarIndicator(
-                      rating: restaurant.rating,
-                      itemCount: 5,
-                      itemSize: 20,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: secondaryColor,
-                      ),
-                    ),
-                    largeSpacing(),
-                    Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
-                    largeSpacing(),
-                    Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                        width: double.infinity,
-                        color: accentColor,
-                        child: Text('Menu', style: Theme.of(context).textTheme.subtitle1)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Foods', style: Theme.of(context).textTheme.subtitle1),
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: restaurant.menus.foods.length,
-                            itemBuilder: (context, index) {
-                              return Text(
-                                restaurant.menus.foods[index].name,
-                                style: Theme.of(context).textTheme.subtitle1,
-                              );
-                            },
-                          ),
-                          largeSpacing(),
-                          const Divider(height: 3, color: secondaryColor),
-                          largeSpacing(),
-                          Text('Drinks', style: Theme.of(context).textTheme.subtitle1),
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: restaurant.menus.drinks.length,
-                            itemBuilder: (context, index) {
-                              return Text(
-                                restaurant.menus.drinks[index].name,
-                                style: Theme.of(context).textTheme.subtitle1,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // totalRatting(food_lbl__96_rating),
-                  ],
-                ),
-              ),
+              _detailInfo(context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container _detailInfo(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(restaurant.name, style: Theme.of(context).textTheme.headline3),
+          smallSpacing(),
+          Row(
+            children: [
+              const Icon(Icons.location_on),
+              Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+            ],
+          ),
+          smallSpacing(),
+          RatingBarIndicator(
+            rating: restaurant.rating,
+            itemCount: 5,
+            itemSize: 20,
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: secondaryColor,
+            ),
+          ),
+          largeSpacing(),
+          Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
+          largeSpacing(),
+          Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              width: double.infinity,
+              color: accentColor,
+              child: Text('Menu', style: Theme.of(context).textTheme.subtitle1)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Foods', style: Theme.of(context).textTheme.subtitle1),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: restaurant.menus.foods.length,
+                  itemBuilder: (context, index) {
+                    return Text(
+                      restaurant.menus.foods[index].name,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    );
+                  },
+                ),
+                largeSpacing(),
+                const Divider(height: 3, color: secondaryColor),
+                largeSpacing(),
+                Text('Drinks', style: Theme.of(context).textTheme.subtitle1),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: restaurant.menus.drinks.length,
+                  itemBuilder: (context, index) {
+                    return Text(
+                      restaurant.menus.drinks[index].name,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
