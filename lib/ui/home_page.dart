@@ -1,16 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:restaurant_app/detail_restaurant.dart';
-import 'package:restaurant_app/helper.dart';
-import 'package:restaurant_app/restaurant.dart';
-import 'package:restaurant_app/styles.dart';
+import 'package:restaurant_app/ui/detail_restaurant.dart';
+import 'package:restaurant_app/utils/helper.dart';
+import 'package:restaurant_app/data/restaurant.dart';
+import 'package:restaurant_app/utils/styles.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
   const HomePage({Key? key}) : super(key: key);
-  // static const String routeName = '/home';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-              child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.headline6),
+              child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
             ),
             FutureBuilder<String>(
               future: DefaultAssetBundle.of(context).loadString('assets/file/local_restaurant.json'),

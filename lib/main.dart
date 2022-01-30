@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/home_page.dart';
-import 'package:restaurant_app/splash.dart';
-import 'styles.dart';
+import 'package:restaurant_app/ui/home_page.dart';
+import 'package:restaurant_app/ui/splash.dart';
+import 'utils/styles.dart';
 
 void main() {
   runApp(const MyApp());

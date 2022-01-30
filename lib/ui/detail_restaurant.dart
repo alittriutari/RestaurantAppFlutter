@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:restaurant_app/helper.dart';
-import 'package:restaurant_app/restaurant.dart';
-import 'package:restaurant_app/styles.dart';
+import 'package:restaurant_app/utils/helper.dart';
+import 'package:restaurant_app/data/restaurant.dart';
+import 'package:restaurant_app/utils/styles.dart';
 
 class DetailRestaurant extends StatelessWidget {
   static const String routeName = '/detail-restaurant';
@@ -57,7 +57,13 @@ class DetailRestaurant extends StatelessWidget {
                   children: <Widget>[
                     Text(restaurant.name, style: Theme.of(context).textTheme.headline3),
                     smallSpacing(),
-                    Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on),
+                        Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+                      ],
+                    ),
+                    smallSpacing(),
                     RatingBarIndicator(
                       rating: restaurant.rating,
                       itemCount: 5,
