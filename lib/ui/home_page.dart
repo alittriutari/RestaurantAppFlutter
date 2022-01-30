@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/platform_widget.dart';
+import 'package:restaurant_app/utils/platform_widget.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/data/restaurant.dart';
