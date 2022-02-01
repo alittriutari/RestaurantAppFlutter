@@ -19,8 +19,14 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(elevation: 0),
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                  primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
-          colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
+                  primary: primaryColor,
+                  onPrimary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)))),
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: primaryColor,
+              secondary: secondaryColor,
+              onPrimary: Colors.white)),
       routes: {
         SplashPage.routeName: (context) => const SplashPage(),
         HomePage.routeName: (context) => const HomePage(),

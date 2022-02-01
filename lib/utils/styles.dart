@@ -6,20 +6,36 @@ const Color secondaryColor = Color(0xffFCA311);
 const Color accentColor = Color(0xffE5E5E5);
 
 final TextTheme myTheme = TextTheme(
-  headline1: GoogleFonts.openSans(fontSize: 95, fontWeight: FontWeight.w400, letterSpacing: -1.5, color: primaryColor),
-  headline2: GoogleFonts.openSans(fontSize: 59, fontWeight: FontWeight.w400, letterSpacing: -0.5, color: primaryColor),
+  headline1: GoogleFonts.openSans(
+      fontSize: 95,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -1.5,
+      color: primaryColor),
+  headline2: GoogleFonts.openSans(
+      fontSize: 59,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -0.5,
+      color: primaryColor),
   headline3: GoogleFonts.openSans(
     fontSize: 48,
     fontWeight: FontWeight.w400,
     color: primaryColor,
   ),
-  headline4: GoogleFonts.openSans(fontSize: 34, fontWeight: FontWeight.w400, letterSpacing: 0.25, color: primaryColor),
+  headline4: GoogleFonts.openSans(
+      fontSize: 34,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+      color: primaryColor),
   headline5: GoogleFonts.openSans(
     fontSize: 24,
     fontWeight: FontWeight.w400,
     color: primaryColor,
   ),
-  headline6: GoogleFonts.openSans(fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 0.15, color: primaryColor),
+  headline6: GoogleFonts.openSans(
+      fontSize: 20,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.15,
+      color: primaryColor),
   subtitle1: GoogleFonts.openSans(
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -38,7 +54,11 @@ final TextTheme myTheme = TextTheme(
     letterSpacing: 0.5,
     color: primaryColor,
   ),
-  bodyText2: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25, color: primaryColor),
+  bodyText2: GoogleFonts.openSans(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+      color: primaryColor),
   button: GoogleFonts.openSans(
     fontSize: 14,
     fontWeight: FontWeight.w500,

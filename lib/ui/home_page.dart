@@ -48,14 +48,17 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text('Restaurant', style: Theme.of(context).textTheme.headline4),
+            child: Text('Restaurant',
+                style: Theme.of(context).textTheme.headline4),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-            child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
+            child: Text('Recommendation restaurant for you!',
+                style: Theme.of(context).textTheme.subtitle2),
           ),
           FutureBuilder<String>(
-            future: DefaultAssetBundle.of(context).loadString('assets/file/local_restaurant.json'),
+            future: DefaultAssetBundle.of(context)
+                .loadString('assets/file/local_restaurant.json'),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final jsonResult = jsonDecode(snapshot.data!);
@@ -77,7 +80,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Padding _restaurantItem(BuildContext context, Restaurant restaurantList, int index) {
+  Padding _restaurantItem(
+      BuildContext context, Restaurant restaurantList, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: GestureDetector(

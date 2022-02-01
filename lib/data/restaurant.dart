@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-Restaurant restaurantFromJson(String str) => Restaurant.fromJson(json.decode(str));
+Restaurant restaurantFromJson(String str) =>
+    Restaurant.fromJson(json.decode(str));
 
 String restaurantToJson(Restaurant data) => json.encode(data.toJson());
 
@@ -12,7 +13,8 @@ class Restaurant {
   List<RestaurantElement> restaurants;
 
   factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
-        restaurants: List<RestaurantElement>.from(json["restaurants"].map((x) => RestaurantElement.fromJson(x))),
+        restaurants: List<RestaurantElement>.from(
+            json["restaurants"].map((x) => RestaurantElement.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,7 +41,8 @@ class RestaurantElement {
   double rating;
   Menus menus;
 
-  factory RestaurantElement.fromJson(Map<String, dynamic> json) => RestaurantElement(
+  factory RestaurantElement.fromJson(Map<String, dynamic> json) =>
+      RestaurantElement(
         id: json["id"],
         name: json["name"],
         description: json["description"],

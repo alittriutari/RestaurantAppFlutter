@@ -63,7 +63,8 @@ class DetailRestaurant extends StatelessWidget {
   Container _detailInfo(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
+      decoration:
+          BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -72,7 +73,8 @@ class DetailRestaurant extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.location_on),
-              Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+              Text(restaurant.city,
+                  style: Theme.of(context).textTheme.bodyText1),
             ],
           ),
           smallSpacing(),
@@ -87,13 +89,15 @@ class DetailRestaurant extends StatelessWidget {
             ),
           ),
           largeSpacing(),
-          Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
+          Text(restaurant.description,
+              style: Theme.of(context).textTheme.bodyText2),
           largeSpacing(),
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               width: double.infinity,
               color: accentColor,
-              child: Text('Menu', style: Theme.of(context).textTheme.subtitle1)),
+              child:
+                  Text('Menu', style: Theme.of(context).textTheme.subtitle1)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Column(
