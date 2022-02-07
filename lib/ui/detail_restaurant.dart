@@ -6,7 +6,7 @@ import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
-  static const String routeName = '/detail-restaurant';
+  static const routeName = '/detail-restaurant';
   final RestaurantElement restaurant;
   const DetailRestaurantPage({
     Key? key,

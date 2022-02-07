@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_list_provider.dart';
+import 'package:restaurant_app/provider/search_provider.dart';
 import 'package:restaurant_app/ui/home_page.dart';
+import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/ui/splash.dart';
 import 'utils/styles.dart';
 
@@ -15,8 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RestaurantProvider(apiService: ApiService()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => RestaurantProvider(apiService: ApiService())),
+        ChangeNotifierProvider(create: (context) => SearchProvider(apiService: ApiService())),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Restaurant App',
@@ -29,6 +34,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
           HomePage.routeName: (context) => const HomePage(),
+          SearchPage.routeName: (context) => SearchPage()
         },
       ),
     );

@@ -53,7 +53,7 @@ class RestaurantItem extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.location_on,
-                      color: accentColor,
+                      color: primaryColor,
                       size: 20,
                     ),
                     Text(restaurant.city)

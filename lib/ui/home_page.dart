@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/ui/restaurant_item.dart';
+import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
 import 'package:restaurant_app/provider/restaurant_list_provider.dart';
 
@@ -22,9 +23,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Restaurant List'),
-      ),
+          centerTitle: true,
+          title: const Text('Restaurant List'),
+          actions: [IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search))]),
       body: _buildList(context),
     );
   }
