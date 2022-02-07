@@ -4,10 +4,10 @@
 
 import 'dart:convert';
 
-DetailRestaurant detailRestaurantFromJson(String str) => DetailRestaurant.fromJson(json.decode(str));
+DetailRestaurantResult detailRestaurantFromJson(String str) => DetailRestaurantResult.fromJson(json.decode(str));
 
-class DetailRestaurant {
-  DetailRestaurant({
+class DetailRestaurantResult {
+  DetailRestaurantResult({
     required this.error,
     required this.message,
     required this.restaurant,
@@ -17,7 +17,7 @@ class DetailRestaurant {
   String message;
   Restaurant restaurant;
 
-  factory DetailRestaurant.fromJson(Map<String, dynamic> json) => DetailRestaurant(
+  factory DetailRestaurantResult.fromJson(Map<String, dynamic> json) => DetailRestaurantResult(
         error: json["error"],
         message: json["message"],
         restaurant: Restaurant.fromJson(json["restaurant"]),

@@ -1,15 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/ui/restaurant_item.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
-import 'package:restaurant_app/ui/detail_restaurant.dart';
-import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/provider/restaurant_list_provider.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -59,12 +53,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Consumer<RestaurantProvider>(
             builder: (context, state, _) {
-              if (state.state == ResultState.Loading) {
+              if (state.state == ResultState.loading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else {
-                if (state.state == ResultState.HasData) {
+                if (state.state == ResultState.hasData) {
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: state.result.restaurants.length,
@@ -73,9 +67,9 @@ class _HomePageState extends State<HomePage> {
                       return RestaurantItem(restaurant: res);
                     },
                   );
-                } else if (state.state == ResultState.NoData) {
+                } else if (state.state == ResultState.noData) {
                   return Center(child: Text(state.message));
-                } else if (state.state == ResultState.Error) {
+                } else if (state.state == ResultState.error) {
                   return Center(child: Text(state.message));
                 } else {
                   return const Text('');

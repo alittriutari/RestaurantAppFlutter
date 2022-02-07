@@ -18,7 +18,7 @@ class RestaurantItem extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailRestaurant(
+                builder: (context) => DetailRestaurantPage(
                   restaurant: restaurant,
                 ),
               ));
@@ -76,6 +76,5 @@ class RestaurantItem extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

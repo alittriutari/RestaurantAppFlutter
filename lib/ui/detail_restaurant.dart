@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
-class DetailRestaurant extends StatelessWidget {
+class DetailRestaurantPage extends StatelessWidget {
   static const String routeName = '/detail-restaurant';
   final RestaurantElement restaurant;
-  const DetailRestaurant({
+  const DetailRestaurantPage({
     Key? key,
     required this.restaurant,
   }) : super(key: key);
@@ -20,32 +21,7 @@ class DetailRestaurant extends StatelessWidget {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-              expandedHeight: expandHeight,
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-              pinned: true,
-              titleSpacing: 0,
-              backgroundColor: innerBoxIsScrolled ? primaryColor : primaryColor,
-              actionsIconTheme: const IconThemeData(opacity: 0.0),
-              flexibleSpace: FlexibleSpaceBar(
-                background: SizedBox(
-                  height: expandHeight,
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: <Widget>[
-                      Hero(
-                        tag: restaurant.pictureId,
-                        child: Image.network(
-                          restaurant.pictureId,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            detailSliverAppbar(expandHeight, innerBoxIsScrolled),
           ];
         },
         body: SingleChildScrollView(
@@ -53,6 +29,35 @@ class DetailRestaurant extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _detailInfo(context),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  SliverAppBar detailSliverAppbar(double expandHeight, bool innerBoxIsScrolled) {
+    return SliverAppBar(
+      expandedHeight: expandHeight,
+      floating: true,
+      forceElevated: innerBoxIsScrolled,
+      pinned: true,
+      titleSpacing: 0,
+      backgroundColor: innerBoxIsScrolled ? primaryColor : primaryColor,
+      actionsIconTheme: const IconThemeData(opacity: 0.0),
+      flexibleSpace: FlexibleSpaceBar(
+        background: SizedBox(
+          height: expandHeight,
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: <Widget>[
+              Hero(
+                tag: restaurant.pictureId,
+                child: Image.network(
+                  ApiService.baseImageUrlLarge + restaurant.pictureId,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ],
           ),
         ),
