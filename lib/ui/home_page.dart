@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/ui/restaurant_item.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/data/restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,103 +51,39 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text('Restaurant',
-                style: Theme.of(context).textTheme.headline4),
+            child: Text('Restaurant', style: Theme.of(context).textTheme.headline4),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-            child: Text('Recommendation restaurant for you!',
-                style: Theme.of(context).textTheme.subtitle2),
+            child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
           ),
-          FutureBuilder<String>(
-            future: DefaultAssetBundle.of(context)
-                .loadString('assets/file/local_restaurant.json'),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final jsonResult = jsonDecode(snapshot.data!);
-                var restaurantList = restaurantFromJson(jsonEncode(jsonResult));
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: restaurantList.restaurants.length,
-                  itemBuilder: (context, index) {
-                    return _restaurantItem(context, restaurantList, index);
-                  },
+          Consumer<RestaurantProvider>(
+            builder: (context, state, _) {
+              if (state.state == ResultState.Loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
+              } else {
+                if (state.state == ResultState.HasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: state.result.restaurants.length,
+                    itemBuilder: (context, index) {
+                      var res = state.result.restaurants[index];
+                      return RestaurantItem(restaurant: res);
+                    },
+                  );
+                } else if (state.state == ResultState.NoData) {
+                  return Center(child: Text(state.message));
+                } else if (state.state == ResultState.Error) {
+                  return Center(child: Text(state.message));
+                } else {
+                  return const Text('');
+                }
               }
-              return const CircularProgressIndicator();
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Padding _restaurantItem(
-      BuildContext context, Restaurant restaurantList, int index) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailRestaurant(
-                  restaurant: restaurantList.restaurants[index],
-                ),
-              ));
-        },
-        child: Row(
-          children: [
-            Hero(
-              tag: restaurantList.restaurants[index].pictureId,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  restaurantList.restaurants[index].pictureId,
-                  fit: BoxFit.fill,
-                  width: 100,
-                  height: 80,
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  restaurantList.restaurants[index].name,
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: accentColor,
-                      size: 20,
-                    ),
-                    Text(restaurantList.restaurants[index].city)
-                  ],
-                ),
-                mediumSpacing(),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.star,
-                      color: secondaryColor,
-                      size: 20,
-                    ),
-                    Text(restaurantList.restaurants[index].rating.toString())
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
       ),
     );
   }

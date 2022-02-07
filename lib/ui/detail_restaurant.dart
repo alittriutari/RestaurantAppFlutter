@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/data/restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class DetailRestaurant extends StatelessWidget {
@@ -63,8 +63,7 @@ class DetailRestaurant extends StatelessWidget {
   Container _detailInfo(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration:
-          BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
+      decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -73,8 +72,7 @@ class DetailRestaurant extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.location_on),
-              Text(restaurant.city,
-                  style: Theme.of(context).textTheme.bodyText1),
+              Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
             ],
           ),
           smallSpacing(),
@@ -89,50 +87,7 @@ class DetailRestaurant extends StatelessWidget {
             ),
           ),
           largeSpacing(),
-          Text(restaurant.description,
-              style: Theme.of(context).textTheme.bodyText2),
-          largeSpacing(),
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              width: double.infinity,
-              color: accentColor,
-              child:
-                  Text('Menu', style: Theme.of(context).textTheme.subtitle1)),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Foods', style: Theme.of(context).textTheme.subtitle1),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: restaurant.menus.foods.length,
-                  itemBuilder: (context, index) {
-                    return Text(
-                      restaurant.menus.foods[index].name,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    );
-                  },
-                ),
-                largeSpacing(),
-                const Divider(height: 3, color: secondaryColor),
-                largeSpacing(),
-                Text('Drinks', style: Theme.of(context).textTheme.subtitle1),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: restaurant.menus.drinks.length,
-                  itemBuilder: (context, index) {
-                    return Text(
-                      restaurant.menus.drinks[index].name,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
+          Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
         ],
       ),
     );
