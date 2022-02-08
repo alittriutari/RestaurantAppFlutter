@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/widget/search_item.dart';
+import 'package:restaurant_app/widget/restaurant_item.dart';
 import 'package:restaurant_app/widget/search_widget.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +39,7 @@ class SearchPage extends StatelessWidget {
                       itemCount: search.result.restaurants.length,
                       itemBuilder: (context, index) {
                         var res = search.result.restaurants[index];
-                        return SearchItem(searchItem: res);
+                        return RestaurantItem(restaurant: res);
                       },
                     );
                   } else if (search.state == ResultState.noData) {

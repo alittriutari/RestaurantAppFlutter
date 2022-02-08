@@ -72,7 +72,7 @@ class DetailRestaurantPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(restaurant.name, style: Theme.of(context).textTheme.headline3),
+          Text(restaurant.name, style: Theme.of(context).textTheme.headline4),
           smallSpacing(),
           Row(
             children: [

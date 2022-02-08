@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Restaurant App',
         theme: ThemeData(
+            textTheme: myTheme,
             appBarTheme: const AppBarTheme(elevation: 0),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(

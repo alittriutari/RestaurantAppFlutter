@@ -24,22 +24,11 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/img/logo.png',
-              height: 150,
-              width: 150,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text(
-                'Restaurant App',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            )
-          ],
+        child: AspectRatio(
+          aspectRatio: 1.5 / 1,
+          child: Image.asset(
+            'assets/img/logo.png',
+          ),
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
 import 'package:restaurant_app/provider/restaurant_list_provider.dart';
 import 'package:restaurant_app/widget/restaurant_item.dart';
+import 'package:restaurant_app/widget/review_item.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
@@ -52,6 +53,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
             child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
           ),
+          ReviewItem(),
           Consumer<RestaurantProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.loading) {
