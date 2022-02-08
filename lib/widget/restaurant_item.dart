@@ -6,7 +6,7 @@ import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class RestaurantItem extends StatelessWidget {
-  final RestaurantElement restaurant;
+  final Restaurant restaurant;
   const RestaurantItem({Key? key, required this.restaurant}) : super(key: key);
 
   @override

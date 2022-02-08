@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
   static const routeName = '/detail-restaurant';
-  final RestaurantElement restaurant;
+  final Restaurant restaurant;
   const DetailRestaurantPage({
     Key? key,
     required this.restaurant,

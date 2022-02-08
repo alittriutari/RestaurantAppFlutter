@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
           HomePage.routeName: (context) => const HomePage(),
-          SearchPage.routeName: (context) => SearchPage()
+          SearchPage.routeName: (context) => const SearchPage()
         },
       ),
     );

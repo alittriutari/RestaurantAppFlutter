@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/search_restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
 class SearchItem extends StatelessWidget {
-  final SearchRestaurant searchItem;
+  final Restaurant searchItem;
   const SearchItem({Key? key, required this.searchItem}) : super(key: key);
 
   @override
@@ -14,13 +14,13 @@ class SearchItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => DetailRestaurantPage(
-          //         restaurant: searchItem,
-          //       ),
-          //     ));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailRestaurantPage(
+                  restaurant: searchItem,
+                ),
+              ));
         },
         child: Row(
           children: [
