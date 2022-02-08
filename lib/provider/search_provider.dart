@@ -1,29 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/data/model/search_restaurant.dart';
 
 enum ResultState { loading, noData, hasData, error }
 
 class SearchProvider extends ChangeNotifier {
   final ApiService apiService;
-  // final String searchText;
+  SearchProvider({required this.apiService});
 
-  SearchProvider({required this.apiService}) {
-    _searchRestaurant();
-  }
-
-  late RestaurantResult _restaurantResult;
-  late ResultState _state;
+  late SearchResult _searchResult;
+  ResultState _state = ResultState.noData;
 
   String _message = '';
-  String searchText = 'pot';
 
   String get message => _message;
-  RestaurantResult get result => _restaurantResult;
+  SearchResult get result => _searchResult;
   ResultState get state => _state;
 
-  Future<dynamic> _searchRestaurant() async {
-    print('hahaha ' + searchText);
+  Future<dynamic> searchRestaurant(String searchText) async {
     try {
       _state = ResultState.loading;
       notifyListeners();
@@ -35,7 +29,8 @@ class SearchProvider extends ChangeNotifier {
       } else {
         _state = ResultState.hasData;
         notifyListeners();
-        return _restaurantResult = restaurant;
+        _searchResult = restaurant;
+        return restaurant;
       }
     } catch (e) {
       _state = ResultState.error;
