@@ -17,9 +17,14 @@ final TextTheme myTheme = TextTheme(
   subtitle2: GoogleFonts.ubuntu(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.1),
   bodyText1: GoogleFonts.openSans(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.5),
   bodyText2: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  button: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 1.25),
-  caption: GoogleFonts.openSans(fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4),
-  overline: GoogleFonts.openSans(fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
+  button: GoogleFonts.openSans(fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 1.25),
+  caption: GoogleFonts.openSans(fontSize: 12, color: primaryColor.withOpacity(0.8), fontWeight: FontWeight.w400, letterSpacing: 0.4),
+  overline: GoogleFonts.openSans(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1.5,
+    decoration: TextDecoration.underline,
+  ),
 );
 
 List<BoxShadow> defaultBoxShadow({

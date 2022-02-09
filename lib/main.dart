@@ -5,6 +5,7 @@ import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/provider/restaurant_list_provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
 import 'package:restaurant_app/ui/home_page.dart';
+import 'package:restaurant_app/ui/review_list.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/ui/splash.dart';
 import 'utils/styles.dart';
@@ -32,12 +33,12 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(elevation: 0),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                    primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
+                    padding: EdgeInsets.symmetric(vertical: 20), primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder())),
             colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
           HomePage.routeName: (context) => const HomePage(),
-          SearchPage.routeName: (context) => const SearchPage()
+          SearchPage.routeName: (context) => const SearchPage(),
         },
       ),
     );

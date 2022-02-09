@@ -5,8 +5,10 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
+import 'package:restaurant_app/ui/review_list.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/widget/review_item.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
   static const routeName = '/detail-restaurant';
@@ -20,47 +22,52 @@ class DetailRestaurantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: ChangeNotifierProvider(
-          create: (context) {
-            return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
-          },
-          child: Consumer<DetailRestaurantProvider>(
-            builder: (context, detail, child) {
-              if (detail.state == ResultState.loading) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
+      backgroundColor: Colors.white,
+      body: ChangeNotifierProvider(
+        create: (context) {
+          return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
+        },
+        child: Consumer<DetailRestaurantProvider>(
+          builder: (context, detail, child) {
+            if (detail.state == ResultState.loading) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else {
+              if (detail.state == ResultState.hasData) {
+                return NestedScrollView(
+                    headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[
+                        detailSliverAppbar(expandHeight, innerBoxIsScrolled, detail.detailResult.restaurant),
+                      ];
+                    },
+                    body: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          _detailInfo(context, detail.detailResult.restaurant),
+                        ],
+                      ),
+                    ));
+              } else if (detail.state == ResultState.noData) {
+                return Center(child: Text(detail.detailResult.message));
+              } else if (detail.state == ResultState.error) {
+                return Center(child: Text(detail.detailResult.message));
               } else {
-                if (detail.state == ResultState.hasData) {
-                  return NestedScrollView(
-                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                        return <Widget>[
-                          detailSliverAppbar(expandHeight, innerBoxIsScrolled, detail.detailResult.restaurant),
-                        ];
-                      },
-                      body: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            _detailInfo(context, detail.detailResult.restaurant),
-                          ],
-                        ),
-                      ));
-                } else if (detail.state == ResultState.noData) {
-                  return Center(child: Text(detail.detailResult.message));
-                } else if (detail.state == ResultState.error) {
-                  return Center(child: Text(detail.detailResult.message));
-                } else {
-                  return const Text('');
-                }
+                return const Text('');
               }
-            },
-          ),
-        ));
+            }
+          },
+        ),
+      ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () {},
+        child: Text('Add Review'),
+      ),
+    );
   }
 
   detailSliverAppbar(double expandHeight, bool innerBoxIsScrolled, RestaurantItem restaurantItem) {
@@ -120,6 +127,40 @@ class DetailRestaurantPage extends StatelessWidget {
           ),
           largeSpacing(),
           Text(restaurantItem.description, style: Theme.of(context).textTheme.bodyText2),
+          largeSpacing(),
+          Text(
+            'Review',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          smallSpacing(),
+          Text(
+            '(${restaurantItem.customerReviews.length} review)',
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          mediumSpacing(),
+          ReviewItem(
+            customerReview: restaurantItem.customerReviews.first,
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewListPage(
+                          restaurantItem: restaurantItem,
+                        ),
+                      ));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'More',
+                    style: Theme.of(context).textTheme.overline,
+                  ),
+                )),
+          )
         ],
       ),
     );
