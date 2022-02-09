@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
 import 'package:restaurant_app/utils/styles.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/widget/custom_textfield.dart';
 
 // ignore: must_be_immutable
 class SearchWidget extends StatelessWidget {
@@ -11,22 +12,15 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return CustomTextfield(
       controller: searchCont,
-      decoration: InputDecoration(
-          filled: true,
-          hintText: 'Search',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(
-              width: 0,
-              style: BorderStyle.none,
-            ),
-          ),
-          fillColor: accentColor),
-      onFieldSubmitted: (String searchText) {
+      hintText: 'Search',
+      title: '',
+      fillColor: accentColor,
+      onSubmit: (text) {
         Provider.of<SearchProvider>(context, listen: false).searchRestaurant(searchCont.text);
       },
+      showTitle: false,
     );
   }
 }

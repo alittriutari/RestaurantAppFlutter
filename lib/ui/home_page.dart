@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
-import 'package:restaurant_app/provider/restaurant_list_provider.dart';
+import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/restaurant_item.dart';
 import 'package:restaurant_app/widget/review_item.dart';
 

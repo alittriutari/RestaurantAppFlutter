@@ -5,6 +5,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
+import 'package:restaurant_app/ui/add_review.dart';
 import 'package:restaurant_app/ui/review_list.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
@@ -21,13 +22,13 @@ class DetailRestaurantPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: ChangeNotifierProvider(
-        create: (context) {
-          return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
-        },
-        child: Consumer<DetailRestaurantProvider>(
+    return ChangeNotifierProvider(
+      create: (context) {
+        return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Consumer<DetailRestaurantProvider>(
           builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
@@ -62,10 +63,16 @@ class DetailRestaurantPage extends StatelessWidget {
             }
           },
         ),
-      ),
-      bottomNavigationBar: ElevatedButton(
-        onPressed: () {},
-        child: Text('Add Review'),
+        bottomNavigationBar: Consumer<DetailRestaurantProvider>(
+          builder: (context, detail, child) {
+            return ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddReviewPage(restaurantItem: detail.detailResult.restaurant)));
+              },
+              child: const Text('Add Review'),
+            );
+          },
+        ),
       ),
     );
   }

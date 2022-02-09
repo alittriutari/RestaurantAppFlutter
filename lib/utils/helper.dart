@@ -7,6 +7,13 @@ Widget smallSpacing() => const SizedBox(
 Widget mediumSpacing() => const SizedBox(
       height: 10,
     );
+Widget mediumHorizontalSpacing() => const SizedBox(
+      width: 10,
+    );
 Widget largeSpacing() => const SizedBox(
       height: 16,
+    );
+
+Widget superLargeSpacing() => const SizedBox(
+      height: 24,
     );
