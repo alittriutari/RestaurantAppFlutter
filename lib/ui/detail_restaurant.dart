@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
@@ -17,26 +20,50 @@ class DetailRestaurantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            detailSliverAppbar(expandHeight, innerBoxIsScrolled),
-          ];
-        },
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _detailInfo(context),
-            ],
+        backgroundColor: Colors.white,
+        body: ChangeNotifierProvider(
+          create: (context) {
+            return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
+          },
+          child: Consumer<DetailRestaurantProvider>(
+            builder: (context, detail, child) {
+              if (detail.state == ResultState.loading) {
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              } else {
+                if (detail.state == ResultState.hasData) {
+                  return NestedScrollView(
+                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          detailSliverAppbar(expandHeight, innerBoxIsScrolled, detail.detailResult.restaurant),
+                        ];
+                      },
+                      body: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            _detailInfo(context, detail.detailResult.restaurant),
+                          ],
+                        ),
+                      ));
+                } else if (detail.state == ResultState.noData) {
+                  return Center(child: Text(detail.detailResult.message));
+                } else if (detail.state == ResultState.error) {
+                  return Center(child: Text(detail.detailResult.message));
+                } else {
+                  return const Text('');
+                }
+              }
+            },
           ),
-        ),
-      ),
-    );
+        ));
   }
 
-  SliverAppBar detailSliverAppbar(double expandHeight, bool innerBoxIsScrolled) {
+  detailSliverAppbar(double expandHeight, bool innerBoxIsScrolled, RestaurantItem restaurantItem) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -52,9 +79,9 @@ class DetailRestaurantPage extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: <Widget>[
               Hero(
-                tag: restaurant.pictureId,
+                tag: restaurantItem.pictureId,
                 child: Image.network(
-                  ApiService.baseImageUrlLarge + restaurant.pictureId,
+                  ApiService.baseImageUrlLarge + restaurantItem.pictureId,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -65,24 +92,24 @@ class DetailRestaurantPage extends StatelessWidget {
     );
   }
 
-  Container _detailInfo(BuildContext context) {
+  _detailInfo(BuildContext context, RestaurantItem restaurantItem) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(restaurant.name, style: Theme.of(context).textTheme.headline4),
+          Text(restaurantItem.name, style: Theme.of(context).textTheme.headline4),
           smallSpacing(),
           Row(
             children: [
               const Icon(Icons.location_on),
-              Text(restaurant.city, style: Theme.of(context).textTheme.bodyText1),
+              Text(restaurantItem.city, style: Theme.of(context).textTheme.bodyText1),
             ],
           ),
           smallSpacing(),
           RatingBarIndicator(
-            rating: restaurant.rating,
+            rating: restaurantItem.rating,
             itemCount: 5,
             itemSize: 20,
             physics: const BouncingScrollPhysics(),
@@ -92,7 +119,7 @@ class DetailRestaurantPage extends StatelessWidget {
             ),
           ),
           largeSpacing(),
-          Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
+          Text(restaurantItem.description, style: Theme.of(context).textTheme.bodyText2),
         ],
       ),
     );
