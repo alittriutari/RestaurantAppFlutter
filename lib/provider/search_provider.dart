@@ -32,9 +32,15 @@ class SearchProvider extends ChangeNotifier {
         return _searchResult = restaurant;
       }
     } catch (e) {
-      _state = ResultState.error;
-      notifyListeners();
-      return _message = 'Error $e';
+      if (e.toString().contains('SocketException')) {
+        _state = ResultState.error;
+        notifyListeners();
+        return _message = 'Check your internet connection';
+      } else {
+        _state = ResultState.error;
+        notifyListeners();
+        return _message = 'Error $e';
+      }
     }
   }
 }
