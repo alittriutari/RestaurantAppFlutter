@@ -50,27 +50,6 @@ class SearchPage extends StatelessWidget {
                     return const Text('');
                   }
                 }
-                // return Column(
-                //   children: [
-                // TextFormField(
-                //   controller: searchCont,
-                //   decoration: InputDecoration(
-                //       filled: true,
-                //       hintText: 'Search',
-                //       border: OutlineInputBorder(
-                //         borderRadius: BorderRadius.circular(10.0),
-                //         borderSide: const BorderSide(
-                //           width: 0,
-                //           style: BorderStyle.none,
-                //         ),
-                //       ),
-                //       fillColor: accentColor),
-                //   onFieldSubmitted: (String searchText) {
-                //     search.searchRestaurant(searchCont.text);
-                //   },
-                // ),
-                //   ],
-                // );
               }),
             ],
           ),

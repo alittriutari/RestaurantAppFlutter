@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/utils/helper.dart';
 
+// ignore: must_be_immutable
 class CustomTextfield extends StatelessWidget {
   CustomTextfield({
     Key? key,

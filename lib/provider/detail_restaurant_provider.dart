@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/model/add_review.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 
 enum ResultState { loading, noData, hasData, error }
@@ -17,11 +18,16 @@ class DetailRestaurantProvider extends ChangeNotifier {
 
   late DetailRestaurant _detailRestaurantResult;
   late ResultState _state;
+  late AddReview _reviewResult;
+
+  AddReview get reviewResult => _reviewResult;
 
   String _message = '';
 
   String get message => _message;
+
   DetailRestaurant get detailResult => _detailRestaurantResult;
+
   ResultState get state => _state;
 
   Future<dynamic> _fetchDetailRestaurant(String id) async {
@@ -32,6 +38,20 @@ class DetailRestaurantProvider extends ChangeNotifier {
       _state = ResultState.hasData;
       notifyListeners();
       return _detailRestaurantResult = detailRestaurant;
+    } catch (e) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error $e';
+    }
+  }
+
+  Future<dynamic> addUserReview(String id, String name, String review) async {
+    try {
+      _state = ResultState.loading;
+      notifyListeners();
+      final userReview = await apiService.addReview(id, name, review);
+
+      return _reviewResult = userReview;
     } catch (e) {
       _state = ResultState.error;
       notifyListeners();

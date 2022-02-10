@@ -29,8 +29,7 @@ class SearchProvider extends ChangeNotifier {
       } else {
         _state = ResultState.hasData;
         notifyListeners();
-        _searchResult = restaurant;
-        return restaurant;
+        return _searchResult = restaurant;
       }
     } catch (e) {
       _state = ResultState.error;
