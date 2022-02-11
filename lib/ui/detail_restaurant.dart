@@ -44,7 +44,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             } else {
               if (detail.state == ResultState.hasData) {
                 return DefaultTabController(
-                  length: 2,
+                  length: 3,
                   child: NestedScrollView(
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
@@ -57,6 +57,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                                 unselectedLabelColor: darkGrey,
                                 tabs: [
                                   Tab(text: 'Description'),
+                                  Tab(text: 'Menu'),
                                   Tab(text: 'Review'),
                                 ],
                               ),
@@ -68,6 +69,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                       body: TabBarView(
                         children: [
                           _detailInfo(context, detail.detailResult.restaurant),
+                          _menuInfo(context, detail.detailResult.restaurant),
                           _reviewTab(context),
                         ],
                       )),
@@ -191,6 +193,50 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             ),
             largeSpacing(),
             Text(restaurantItem.description, style: Theme.of(context).textTheme.bodyText2),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _menuInfo(BuildContext context, RestaurantItem restaurantItem) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Menu', style: Theme.of(context).textTheme.headline6),
+            superLargeSpacing(),
+            Text('Food', style: Theme.of(context).textTheme.subtitle2),
+            largeSpacing(),
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const Divider(
+                color: accentColor,
+              ),
+              itemCount: restaurantItem.menus.foods.length,
+              itemBuilder: (context, index) {
+                return Text(restaurantItem.menus.foods[index].name);
+              },
+            ),
+            superLargeSpacing(),
+            Text('Drink', style: Theme.of(context).textTheme.subtitle2),
+            largeSpacing(),
+            ListView.separated(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const Divider(
+                color: accentColor,
+              ),
+              itemCount: restaurantItem.menus.drinks.length,
+              itemBuilder: (context, index) {
+                return Text(restaurantItem.menus.drinks[index].name);
+              },
+            )
           ],
         ),
       ),
