@@ -5,6 +5,7 @@ const Color primaryColor = Color(0xff14213D);
 const Color secondaryColor = Color(0xffFCA311);
 const Color accentColor = Color(0xffE5E5E5);
 const Color grey = Color(0xffEEEEEE);
+const Color darkGrey = Color(0xff9E9E9E);
 
 final TextTheme myTheme = TextTheme(
   headline1: GoogleFonts.ubuntu(fontSize: 98, fontWeight: FontWeight.w300, letterSpacing: -1.5),

@@ -19,15 +19,11 @@ class DetailRestaurantProvider extends ChangeNotifier {
   late DetailRestaurant _detailRestaurantResult;
   late ResultState _state;
   late AddReview _reviewResult;
-
-  AddReview get reviewResult => _reviewResult;
-
   String _message = '';
 
   String get message => _message;
-
   DetailRestaurant get detailResult => _detailRestaurantResult;
-
+  AddReview get reviewResult => _reviewResult;
   ResultState get state => _state;
 
   Future<dynamic> _fetchDetailRestaurant(String id) async {
@@ -39,9 +35,15 @@ class DetailRestaurantProvider extends ChangeNotifier {
       notifyListeners();
       return _detailRestaurantResult = detailRestaurant;
     } catch (e) {
-      _state = ResultState.error;
-      notifyListeners();
-      return _message = 'Error $e';
+      if (e.toString().contains('SocketException')) {
+        _state = ResultState.error;
+        notifyListeners();
+        return _message = 'Check your internet connection';
+      } else {
+        _state = ResultState.error;
+        notifyListeners();
+        return _message = 'Error $e';
+      }
     }
   }
 

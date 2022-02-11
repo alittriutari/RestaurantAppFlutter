@@ -55,8 +55,11 @@ class _HomePageState extends State<HomePage> {
           Consumer<RestaurantProvider>(
             builder: (context, state, _) {
               if (state.state == ResultState.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               } else {
                 if (state.state == ResultState.hasData) {

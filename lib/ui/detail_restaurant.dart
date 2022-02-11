@@ -36,7 +36,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
           builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
+                height: MediaQuery.of(context).size.height * 0.9,
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
@@ -48,38 +48,13 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                   child: NestedScrollView(
                       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
                         return <Widget>[
-                          SliverAppBar(
-                            expandedHeight: expandHeight,
-                            floating: true,
-                            forceElevated: innerBoxIsScrolled,
-                            pinned: true,
-                            titleSpacing: 0,
-                            backgroundColor: innerBoxIsScrolled ? primaryColor : primaryColor,
-                            actionsIconTheme: const IconThemeData(opacity: 0.0),
-                            flexibleSpace: FlexibleSpaceBar(
-                              background: SizedBox(
-                                height: expandHeight,
-                                child: Stack(
-                                  alignment: Alignment.bottomRight,
-                                  children: <Widget>[
-                                    Hero(
-                                      tag: detail.detailResult.restaurant.pictureId,
-                                      child: Image.network(
-                                        ApiService.baseImageUrlLarge + detail.detailResult.restaurant.pictureId,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          _sliverAppBar(expandHeight, innerBoxIsScrolled, detail),
                           SliverPersistentHeader(
                             delegate: _SliverAppBarDelegate(
                               const TabBar(
                                 labelColor: primaryColor,
                                 indicatorColor: primaryColor,
-                                unselectedLabelColor: accentColor,
+                                unselectedLabelColor: darkGrey,
                                 tabs: [
                                   Tab(text: 'Description'),
                                   Tab(text: 'Review'),
@@ -98,14 +73,43 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                       )),
                 );
               } else if (detail.state == ResultState.noData) {
-                return Center(child: Text(detail.detailResult.message));
+                return Center(child: Text(detail.message));
               } else if (detail.state == ResultState.error) {
-                return Center(child: Text(detail.detailResult.message));
+                return Center(child: Text(detail.message));
               } else {
                 return const Text('');
               }
             }
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, DetailRestaurantProvider detail) {
+    return SliverAppBar(
+      expandedHeight: expandHeight,
+      floating: true,
+      forceElevated: innerBoxIsScrolled,
+      pinned: true,
+      titleSpacing: 0,
+      backgroundColor: innerBoxIsScrolled ? primaryColor : primaryColor,
+      actionsIconTheme: const IconThemeData(opacity: 0.0),
+      flexibleSpace: FlexibleSpaceBar(
+        background: SizedBox(
+          height: expandHeight,
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: <Widget>[
+              Hero(
+                tag: detail.detailResult.restaurant.pictureId,
+                child: Image.network(
+                  ApiService.baseImageUrlLarge + detail.detailResult.restaurant.pictureId,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
