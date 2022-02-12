@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-DetailRestaurant detailRestaurantFromJson(String str) => DetailRestaurant.fromJson(json.decode(str));
+DetailRestaurant detailRestaurantFromJson(String str) =>
+    DetailRestaurant.fromJson(json.decode(str));
 
 class DetailRestaurant {
   DetailRestaurant({
@@ -13,7 +14,8 @@ class DetailRestaurant {
   String message;
   RestaurantItem restaurant;
 
-  factory DetailRestaurant.fromJson(Map<String, dynamic> json) => DetailRestaurant(
+  factory DetailRestaurant.fromJson(Map<String, dynamic> json) =>
+      DetailRestaurant(
         error: json["error"],
         message: json["message"],
         restaurant: RestaurantItem.fromJson(json["restaurant"]),
@@ -53,9 +55,11 @@ class RestaurantItem {
         address: json["address"],
         pictureId: json["pictureId"],
         rating: json["rating"].toDouble(),
-        categories: List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+        categories: List<Category>.from(
+            json["categories"].map((x) => Category.fromJson(x))),
         menus: Menus.fromJson(json["menus"]),
-        customerReviews: List<CustomerReview>.from(json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
+        customerReviews: List<CustomerReview>.from(
+            json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
       );
 }
 
@@ -99,7 +103,9 @@ class Menus {
   List<Category> drinks;
 
   factory Menus.fromJson(Map<String, dynamic> json) => Menus(
-        foods: List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
-        drinks: List<Category>.from(json["drinks"].map((x) => Category.fromJson(x))),
+        foods:
+            List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
+        drinks: List<Category>.from(
+            json["drinks"].map((x) => Category.fromJson(x))),
       );
 }

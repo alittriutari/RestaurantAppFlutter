@@ -6,11 +6,12 @@ import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/ui/add_review.dart';
+import 'package:restaurant_app/utils/enum.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 import 'package:restaurant_app/widget/review_item.dart';
 
-class DetailRestaurantPage extends StatefulWidget {
+class DetailRestaurantPage extends StatelessWidget {
   static const routeName = '/detail-restaurant';
   final Restaurant restaurant;
   const DetailRestaurantPage({
@@ -19,76 +20,72 @@ class DetailRestaurantPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailRestaurantPage> createState() => _DetailRestaurantPageState();
-}
-
-class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
-  @override
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
     return ChangeNotifierProvider(
       create: (context) {
-        return DetailRestaurantProvider(apiService: ApiService(), id: widget.restaurant.id);
+        return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Consumer<DetailRestaurantProvider>(
-          builder: (context, detail, child) {
-            if (detail.state == ResultState.loading) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 0.9,
-                child: const Center(
-                  child: CircularProgressIndicator(),
+        body: DefaultTabController(
+          length: 3,
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return <Widget>[
+                _sliverAppBar(expandHeight, innerBoxIsScrolled, restaurant),
+                SliverPersistentHeader(
+                  delegate: _SliverAppBarDelegate(
+                    const TabBar(
+                      labelColor: primaryColor,
+                      indicatorColor: primaryColor,
+                      unselectedLabelColor: darkGrey,
+                      tabs: [
+                        Tab(text: 'Description'),
+                        Tab(text: 'Menu'),
+                        Tab(text: 'Review'),
+                      ],
+                    ),
+                  ),
+                  pinned: true,
                 ),
-              );
-            } else {
-              if (detail.state == ResultState.hasData) {
-                return DefaultTabController(
-                  length: 3,
-                  child: NestedScrollView(
-                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                        return <Widget>[
-                          _sliverAppBar(expandHeight, innerBoxIsScrolled, detail),
-                          SliverPersistentHeader(
-                            delegate: _SliverAppBarDelegate(
-                              const TabBar(
-                                labelColor: primaryColor,
-                                indicatorColor: primaryColor,
-                                unselectedLabelColor: darkGrey,
-                                tabs: [
-                                  Tab(text: 'Description'),
-                                  Tab(text: 'Menu'),
-                                  Tab(text: 'Review'),
-                                ],
-                              ),
-                            ),
-                            pinned: true,
-                          ),
-                        ];
-                      },
-                      body: TabBarView(
-                        children: [
-                          _detailInfo(context, detail.detailResult.restaurant),
-                          _menuInfo(context, detail.detailResult.restaurant),
-                          _reviewTab(context),
-                        ],
-                      )),
-                );
-              } else if (detail.state == ResultState.noData) {
-                return Center(child: Text(detail.message));
-              } else if (detail.state == ResultState.error) {
-                return Center(child: Text(detail.message));
-              } else {
-                return const Text('');
-              }
-            }
-          },
+              ];
+            },
+            body: Consumer<DetailRestaurantProvider>(
+              builder: (context, detail, child) {
+                if (detail.state == ResultState.loading) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else {
+                  if (detail.state == ResultState.hasData) {
+                    return TabBarView(
+                      children: [
+                        _detailInfo(context, detail.detailResult.restaurant),
+                        _menuInfo(context, detail.detailResult.restaurant),
+                        _reviewTab(context),
+                      ],
+                    );
+                  } else if (detail.state == ResultState.noData) {
+                    return Center(child: Text(detail.message));
+                  } else if (detail.state == ResultState.error) {
+                    return Center(child: Text(detail.message));
+                  } else {
+                    return const Text('');
+                  }
+                }
+              },
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, DetailRestaurantProvider detail) {
+  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, Restaurant restaurantData) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -104,9 +101,9 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             alignment: Alignment.bottomRight,
             children: <Widget>[
               Hero(
-                tag: detail.detailResult.restaurant.pictureId,
+                tag: restaurantData.pictureId,
                 child: Image.network(
-                  ApiService.baseImageUrlLarge + detail.detailResult.restaurant.pictureId,
+                  ApiService.baseImageUrlLarge + restaurantData.pictureId,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -143,8 +140,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddReviewPage(restaurantItem: review.detailResult.restaurant)))
-                          .then((_) => setState(() {}));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddReviewPage(restaurantItem: review.detailResult.restaurant)));
                     },
                     child: const Text('Add Review'),
                   ),

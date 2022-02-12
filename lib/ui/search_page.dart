@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
+import 'package:restaurant_app/utils/enum.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/widget/restaurant_item.dart';
 import 'package:restaurant_app/widget/search_widget.dart';

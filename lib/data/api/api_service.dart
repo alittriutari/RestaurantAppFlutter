@@ -8,8 +8,10 @@ import 'package:restaurant_app/data/model/search_restaurant.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://restaurant-api.dicoding.dev/';
-  static const String baseImageUrlSmall = 'https://restaurant-api.dicoding.dev/images/small/';
-  static const String baseImageUrlLarge = 'https://restaurant-api.dicoding.dev/images/large/';
+  static const String baseImageUrlSmall =
+      'https://restaurant-api.dicoding.dev/images/small/';
+  static const String baseImageUrlLarge =
+      'https://restaurant-api.dicoding.dev/images/large/';
 
   Future<RestaurantResult> restaurantList() async {
     final response = await http.get(Uri.parse(_baseUrl + 'list'));

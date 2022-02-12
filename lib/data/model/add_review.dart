@@ -16,7 +16,8 @@ class AddReview {
   factory AddReview.fromJson(Map<String, dynamic> json) => AddReview(
         error: json["error"],
         message: json["message"],
-        customerReviews: List<CustomerReview>.from(json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
+        customerReviews: List<CustomerReview>.from(
+            json["customerReviews"].map((x) => CustomerReview.fromJson(x))),
       );
 }
 

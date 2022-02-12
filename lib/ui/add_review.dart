@@ -8,13 +8,12 @@ import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 import 'package:restaurant_app/widget/custom_textfield.dart';
 
-// ignore: must_be_immutable
 class AddReviewPage extends StatelessWidget {
   final RestaurantItem restaurantItem;
   AddReviewPage({Key? key, required this.restaurantItem}) : super(key: key);
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController reviewController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController reviewController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -25,8 +24,10 @@ class AddReviewPage extends StatelessWidget {
           centerTitle: true,
         ),
         body: ChangeNotifierProvider(
-          create: (context) => DetailRestaurantProvider(apiService: ApiService(), id: restaurantItem.id),
-          child: Consumer<DetailRestaurantProvider>(builder: (context, review, child) {
+          create: (context) => DetailRestaurantProvider(
+              apiService: ApiService(), id: restaurantItem.id),
+          child: Consumer<DetailRestaurantProvider>(
+              builder: (context, review, child) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -39,7 +40,8 @@ class AddReviewPage extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
-                              ApiService.baseImageUrlSmall + restaurantItem.pictureId,
+                              ApiService.baseImageUrlSmall +
+                                  restaurantItem.pictureId,
                               fit: BoxFit.fill,
                               width: 100,
                               height: 80,
@@ -54,7 +56,12 @@ class AddReviewPage extends StatelessWidget {
                       ),
                       superLargeSpacing(),
                       CustomTextfield(
-                          controller: nameController, hintText: 'Name', title: 'Name', fillColor: accentColor, onSubmit: (text) {}, showTitle: true),
+                          controller: nameController,
+                          hintText: 'Name',
+                          title: 'Name',
+                          fillColor: accentColor,
+                          onSubmit: (text) {},
+                          showTitle: true),
                       mediumSpacing(),
                       CustomTextfield(
                         controller: reviewController,
@@ -71,8 +78,13 @@ class AddReviewPage extends StatelessWidget {
                         child: ElevatedButton(
                           child: const Text('Submit'),
                           onPressed: () {
-                            review.addUserReview(restaurantItem.id, nameController.text, reviewController.text).whenComplete(() {
-                              Navigator.of(context).pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);
+                            review
+                                .addUserReview(restaurantItem.id,
+                                    nameController.text, reviewController.text)
+                                .whenComplete(() {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomePage.routeName,
+                                  (Route<dynamic> route) => false);
                             });
                           },
                         ),

@@ -2,19 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
+import 'package:restaurant_app/utils/enum.dart';
 import 'package:restaurant_app/utils/platform_widget.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/widget/restaurant_item.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   static const routeName = '/home_page';
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return PlatformWidget(androidBuilder: _buildAndroid, iosBuilder: _buildIos);
@@ -25,7 +21,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
           centerTitle: true,
           title: const Text('Restaurant List'),
-          actions: [IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search))]),
+          actions: [
+            IconButton(
+                onPressed: () =>
+                    Navigator.pushNamed(context, SearchPage.routeName),
+                icon: const Icon(Icons.search))
+          ]),
       body: _buildList(context),
     );
   }
@@ -46,11 +47,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text('Restaurant', style: Theme.of(context).textTheme.headline4),
+            child: Text('Restaurant',
+                style: Theme.of(context).textTheme.headline4),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-            child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
+            child: Text('Recommendation restaurant for you!',
+                style: Theme.of(context).textTheme.subtitle2),
           ),
           Consumer<RestaurantProvider>(
             builder: (context, state, _) {

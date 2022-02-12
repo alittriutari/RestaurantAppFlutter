@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_list.dart';
-
-enum ResultState { loading, noData, hasData, error }
+import 'package:restaurant_app/utils/enum.dart';
 
 class RestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -34,16 +35,14 @@ class RestaurantProvider extends ChangeNotifier {
         notifyListeners();
         return _restaurantResult = restaurant;
       }
+    } on SocketException {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Check your internet connection';
     } catch (e) {
-      if (e.toString().contains('SocketException')) {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Check your internet connection';
-      } else {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Error $e';
-      }
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error $e';
     }
   }
 }

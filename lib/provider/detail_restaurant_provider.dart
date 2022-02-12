@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/add_review.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
-
-enum ResultState { loading, noData, hasData, error }
+import 'package:restaurant_app/utils/enum.dart';
 
 class DetailRestaurantProvider extends ChangeNotifier {
   final ApiService apiService;
@@ -34,16 +35,14 @@ class DetailRestaurantProvider extends ChangeNotifier {
       _state = ResultState.hasData;
       notifyListeners();
       return _detailRestaurantResult = detailRestaurant;
+    } on SocketException {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Check your internet connection';
     } catch (e) {
-      if (e.toString().contains('SocketException')) {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Check your internet connection';
-      } else {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Error $e';
-      }
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error $e';
     }
   }
 
@@ -54,16 +53,14 @@ class DetailRestaurantProvider extends ChangeNotifier {
       final userReview = await apiService.addReview(id, name, review);
 
       return _reviewResult = userReview;
+    } on SocketException {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Check your internet connection';
     } catch (e) {
-      if (e.toString().contains('SocketException')) {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Check your internet connection';
-      } else {
-        _state = ResultState.error;
-        notifyListeners();
-        return _message = 'Error $e';
-      }
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error $e';
     }
   }
 }

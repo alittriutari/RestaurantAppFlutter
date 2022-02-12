@@ -13,7 +13,10 @@ class ReviewItem extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Container(
         width: double.infinity,
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: defaultBoxShadow()),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: defaultBoxShadow()),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
