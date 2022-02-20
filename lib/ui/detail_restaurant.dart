@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/model/favorite.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/db_provider.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/ui/add_review.dart';
 import 'package:restaurant_app/utils/helper.dart';
@@ -26,10 +28,15 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
   @override
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
-    return ChangeNotifierProvider(
-      create: (context) {
-        return DetailRestaurantProvider(apiService: ApiService(), id: widget.restaurant.id);
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) {
+          return DetailRestaurantProvider(apiService: ApiService(), id: widget.restaurant.id);
+        }),
+        ChangeNotifierProvider(create: (context) {
+          return DbProvider();
+        })
+      ],
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Consumer<DetailRestaurantProvider>(
@@ -172,7 +179,25 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(restaurantItem.name, style: Theme.of(context).textTheme.headline4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(child: Text(restaurantItem.name, style: Theme.of(context).textTheme.headline4)),
+                Consumer<DbProvider>(
+                  builder: (context, fav, child) {
+                    // final asdd = Favorite(favorite: 1, restaurantId: restaurantItem.id);
+                    // fav.addFavorite(asdd);
+                    return IconButton(
+                        onPressed: () {
+                          // final asdd = Favorite(favorite: 1, restaurantId: restaurantItem.id);
+                          // fav.addFavorite(asdd);
+                          print(fav.getFavoriteById(restaurantItem.id));
+                        },
+                        icon: Icon(Icons.favorite));
+                  },
+                )
+              ],
+            ),
             smallSpacing(),
             Row(
               children: [

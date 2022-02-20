@@ -4,6 +4,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/ui/home_page.dart';
+import 'package:restaurant_app/ui/list_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 import 'package:restaurant_app/widget/custom_textfield.dart';
@@ -72,7 +73,7 @@ class AddReviewPage extends StatelessWidget {
                           child: const Text('Submit'),
                           onPressed: () {
                             review.addUserReview(restaurantItem.id, nameController.text, reviewController.text).whenComplete(() {
-                              Navigator.of(context).pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);
+                              Navigator.of(context).pushNamedAndRemoveUntil(ListRestaurantPage.routeName, (Route<dynamic> route) => false);
                             });
                           },
                         ),

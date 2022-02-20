@@ -3,8 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
+import 'package:restaurant_app/ui/favorite_page.dart';
 import 'package:restaurant_app/ui/home_page.dart';
+import 'package:restaurant_app/ui/list_restaurant.dart';
 import 'package:restaurant_app/ui/search_page.dart';
+import 'package:restaurant_app/ui/settings_page.dart';
 import 'package:restaurant_app/ui/splash.dart';
 import 'utils/styles.dart';
 
@@ -37,8 +40,10 @@ class MyApp extends StatelessWidget {
             colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
-          HomePage.routeName: (context) => const HomePage(),
+          ListRestaurantPage.routeName: (context) => const HomePage(),
           SearchPage.routeName: (context) => const SearchPage(),
+          FavoritePage.routeName: (context) => const FavoritePage(),
+          SettingsPage.routeName: (context) => const SettingsPage(),
         },
       ),
     );
