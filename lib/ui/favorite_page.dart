@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/provider/db_provider.dart';
 
 class FavoritePage extends StatelessWidget {
   static const routeName = '/favorite';
@@ -6,6 +8,17 @@ class FavoritePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: AppBar(),
+        body: ChangeNotifierProvider(
+            create: (context) => DbProvider(),
+            child: Consumer<DbProvider>(builder: (context, value, child) {
+              return ListView.builder(
+                itemCount: value.favorite.length,
+                itemBuilder: (context, index) {
+                  return Text(value.favorite[index].name);
+                },
+              );
+            })));
   }
 }

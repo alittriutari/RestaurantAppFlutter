@@ -1,21 +1,28 @@
 class Favorite {
-  late int? id;
-  late int favorite;
-  late String restaurantId;
+  late String? id;
+  late String name;
+  late String pictureId;
+  late String city;
+  late double rating;
+  late int isFavorite;
 
-  Favorite({
-    this.id,
-    required this.favorite,
-    required this.restaurantId,
-  });
+  Favorite({this.id, required this.name, required this.pictureId, required this.city, required this.rating, this.isFavorite = 0});
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'favorite': favorite, 'restaurantId': restaurantId};
+    return {'id': id, 'name': name, 'pictureId': pictureId, 'city': city, 'rating': rating, 'isFavorite': isFavorite};
   }
 
   Favorite.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    favorite = map['favorite'];
-    restaurantId = map['restaurantId'];
+    name:
+    map["name"];
+    pictureId:
+    map["pictureId"];
+    city:
+    map["city"];
+    rating:
+    map["rating"].toDouble();
+    isFavorite:
+    map["isFavorite"];
   }
 }

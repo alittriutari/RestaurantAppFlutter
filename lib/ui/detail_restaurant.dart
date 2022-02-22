@@ -185,17 +185,92 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                 Flexible(child: Text(restaurantItem.name, style: Theme.of(context).textTheme.headline4)),
                 Consumer<DbProvider>(
                   builder: (context, fav, child) {
-                    // final asdd = Favorite(favorite: 1, restaurantId: restaurantItem.id);
-                    // fav.addFavorite(asdd);
-                    return IconButton(
-                        onPressed: () {
-                          // final asdd = Favorite(favorite: 1, restaurantId: restaurantItem.id);
-                          // fav.addFavorite(asdd);
-                          print(fav.getFavoriteById(restaurantItem.id));
-                        },
-                        icon: Icon(Icons.favorite));
+                    return FutureBuilder(
+                      future: fav.isFav(restaurantItem.id),
+                      builder: (context, snapshot) {
+                        print(snapshot.data);
+
+                        // final asd = snapshot.data ?? false;
+                        return IconButton(
+                            onPressed: () {
+                              print('hahah ' + fav.isFavorited.toString());
+                              if (fav.isFavorited == true) {
+                                fav.deleteFavorite(restaurantItem.id);
+                              } else {
+                                final result = Favorite(
+                                    id: restaurantItem.id,
+                                    name: restaurantItem.name,
+                                    pictureId: restaurantItem.pictureId,
+                                    city: restaurantItem.city,
+                                    rating: restaurantItem.rating,
+                                    isFavorite: 1);
+                                fav.addFavorite(result);
+                              }
+                            },
+                            icon: fav.isFavorited == true ? Icon(Icons.favorite) : Icon(Icons.favorite_border));
+                      },
+                    );
+                    // return FutureBuilder(
+                    //   future: fav.getFavoriteById(restaurantItem.id),
+                    //   builder: (context, snapshot) {
+                    //     var isFavorite = snapshot.data;
+                    //     return GestureDetector(
+                    //       onTap: () {
+                    // if (isFavorite == true) {
+                    //   fav.deleteFavorite(restaurantItem.id);
+                    // } else {
+                    //   final result = Favorite(
+                    //       id: restaurantItem.id,
+                    //       name: restaurantItem.name,
+                    //       pictureId: restaurantItem.pictureId,
+                    //       city: restaurantItem.city,
+                    //       rating: restaurantItem.rating,
+                    //       isFavorite: 1);
+                    //   fav.addFavorite(result);
+                    // }
+                    //         print(snapshot.data.);
+                    //         print(isFavorite.);
+                    //       },
+                    //       child: Container(
+                    //         height: 30,
+                    //         width: 30,
+                    //         color: isFavorite == true ? Colors.red : Colors.amber,
+                    //       ),
+                    //     );
+                    //   },
+                    // );
                   },
                 )
+                // Consumer<DbProvider>(
+                //   builder: (context, fav, child) {
+                //     fav.getFavoriteById(restaurantItem.id).then((value) {
+                //       return IconButton(
+                //           onPressed: () {
+                //             fav.getFavoriteById(restaurantItem.id).then((value) {
+                //               if (value.isFavorite == 1) {
+                //                 fav.deleteFavorite(restaurantItem.id);
+                //               } else {
+                // final result = Favorite(
+                //     id: restaurantItem.id,
+                //     name: restaurantItem.name,
+                //     pictureId: restaurantItem.pictureId,
+                //     city: restaurantItem.city,
+                //     rating: restaurantItem.rating,
+                //     isFavorite: 1);
+                // fav.addFavorite(result);
+                //               }
+                //             });
+                //           },
+                //           icon: value.isFavorite == 1
+                //               ? const Icon(
+                //                   Icons.favorite,
+                //                   color: Colors.red,
+                //                 )
+                //               : const Icon(Icons.favorite_border));
+                //     });
+                //     return const SizedBox();
+                //   },
+                // )
               ],
             ),
             smallSpacing(),

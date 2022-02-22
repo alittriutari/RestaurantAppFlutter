@@ -23,7 +23,7 @@ class DatabaseHelper {
   Future<Database> _initializeDb() async {
     var path = await getDatabasesPath();
     var db = openDatabase(join(path, 'favorite_db.db'), onCreate: (db, version) async {
-      await db.execute('''CREATE TABLE $_tableName (id INTEGER PRIMARY KEY, restaurantId TEXT, favorite INTEGER)''');
+      await db.execute('''CREATE TABLE $_tableName (id TEXT PRIMARY KEY, name TEXT, pictureId TEXT, city TEXT, rating REAL, isFavorite INTEGER )''');
     }, version: 1);
     return db;
   }
@@ -42,18 +42,12 @@ class DatabaseHelper {
 
   Future<Favorite> getFavoriteByRestaurantId(String id) async {
     final Database db = await database;
-    List<Map<String, dynamic>> results = await db.query(_tableName, where: 'restaurantId = ?', whereArgs: [id]);
-
+    List<Map<String, dynamic>> results = await db.query(_tableName, where: 'id = ?', whereArgs: [id]);
+    print(results.map((e) => Favorite.fromMap(e)).first);
     return results.map((e) => Favorite.fromMap(e)).first;
   }
 
-  Future<void> updateFavorite(Favorite favorite) async {
-    final db = await database;
-
-    await db.update(_tableName, favorite.toMap(), where: 'favorite = ?', whereArgs: [favorite.favorite]);
-  }
-
-  Future<void> deleteFavorite(int id) async {
+  Future<void> deleteFavorite(String id) async {
     final db = await database;
     await db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
   }
