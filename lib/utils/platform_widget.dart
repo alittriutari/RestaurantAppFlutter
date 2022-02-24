@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PlatformWidget extends StatelessWidget {
-  const PlatformWidget(
-      {Key? key, required this.androidBuilder, required this.iosBuilder})
-      : super(key: key);
+  const PlatformWidget({Key? key, required this.androidBuilder, required this.iosBuilder}) : super(key: key);
 
   final WidgetBuilder androidBuilder;
   final WidgetBuilder iosBuilder;

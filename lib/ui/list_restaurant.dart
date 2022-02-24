@@ -18,23 +18,17 @@ class ListRestaurantPage extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Restaurant List'),
-          actions: [
-            IconButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, SearchPage.routeName),
-                icon: const Icon(Icons.search))
-          ]),
+      appBar:
+          AppBar(centerTitle: true, title: const Text('Restaurant List'), actions: [IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search))]),
       body: _buildList(context),
     );
   }
 
   Widget _buildIos(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Restaurant List'),
+      navigationBar: CupertinoNavigationBar(
+        middle: const Text('Restaurant List'),
+        trailing: IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search)),
       ),
       child: _buildList(context),
     );
@@ -47,13 +41,11 @@ class ListRestaurantPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Text('Restaurant',
-                style: Theme.of(context).textTheme.headline4),
+            child: Text('Restaurant', style: Theme.of(context).textTheme.headline4),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-            child: Text('Recommendation restaurant for you!',
-                style: Theme.of(context).textTheme.subtitle2),
+            child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
           ),
           Consumer<RestaurantProvider>(
             builder: (context, state, _) {

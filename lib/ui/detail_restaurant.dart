@@ -6,6 +6,7 @@ import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/provider/db_provider.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/widget/custom_cache_image.dart';
 import 'package:restaurant_app/widget/detail_information_widget.dart';
 import 'package:restaurant_app/widget/menu_information_widget.dart';
 import 'package:restaurant_app/widget/review_widget.dart';
@@ -24,8 +25,7 @@ class DetailRestaurantPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) {
-          return DetailRestaurantProvider(
-              apiService: ApiService(), id: restaurant.id);
+          return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
         }),
         ChangeNotifierProvider(create: (context) {
           return DbProvider();
@@ -35,11 +35,9 @@ class DetailRestaurantPage extends StatelessWidget {
         backgroundColor: Colors.white,
         body: DefaultTabController(
           length: 3,
-          child: NestedScrollView(headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) {
+          child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              _sliverAppBar(
-                  expandHeight, innerBoxIsScrolled, restaurant.pictureId),
+              _sliverAppBar(expandHeight, innerBoxIsScrolled, restaurant.pictureId),
               SliverPersistentHeader(
                 delegate: _SliverAppBarDelegate(
                   const TabBar(
@@ -56,8 +54,7 @@ class DetailRestaurantPage extends StatelessWidget {
                 pinned: true,
               ),
             ];
-          }, body: Consumer<DetailRestaurantProvider>(
-              builder: (context, detail, child) {
+          }, body: Consumer<DetailRestaurantProvider>(builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.9,
@@ -73,8 +70,7 @@ class DetailRestaurantPage extends StatelessWidget {
                       restaurantItem: detail.detailResult.restaurant,
                       restaurant: restaurant,
                     ),
-                    MenuInformationWidget(
-                        restaurantItem: detail.detailResult.restaurant),
+                    MenuInformationWidget(restaurantItem: detail.detailResult.restaurant),
                     const ReviewWidget()
                   ],
                 );
@@ -92,8 +88,7 @@ class DetailRestaurantPage extends StatelessWidget {
     );
   }
 
-  Widget _sliverAppBar(
-      double expandHeight, bool innerBoxIsScrolled, String urlImage) {
+  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, String urlImage) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -110,9 +105,11 @@ class DetailRestaurantPage extends StatelessWidget {
             children: <Widget>[
               Hero(
                 tag: urlImage,
-                child: Image.network(
-                  ApiService.baseImageUrlLarge + urlImage,
-                  fit: BoxFit.cover,
+                child: CustomCacheImage(
+                  imageUrl: ApiService.baseImageUrlLarge + urlImage,
+                  boxFit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ],
@@ -135,8 +132,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16),
       color: Colors.white,

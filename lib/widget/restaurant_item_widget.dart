@@ -1,14 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/widget/custom_cache_image.dart';
 
 class RestaurantItemWidget extends StatelessWidget {
   final Restaurant restaurant;
-  const RestaurantItemWidget({Key? key, required this.restaurant})
-      : super(key: key);
+  const RestaurantItemWidget({Key? key, required this.restaurant}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,9 @@ class RestaurantItemWidget extends StatelessWidget {
               tag: restaurant.pictureId,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  ApiService.baseImageUrlSmall + restaurant.pictureId,
-                  fit: BoxFit.fill,
+                child: CustomCacheImage(
+                  imageUrl: ApiService.baseImageUrlSmall + restaurant.pictureId,
+                  boxFit: BoxFit.fill,
                   width: 100,
                   height: 80,
                 ),
