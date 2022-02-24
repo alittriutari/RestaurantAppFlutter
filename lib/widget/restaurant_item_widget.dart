@@ -5,9 +5,10 @@ import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
 
-class RestaurantItem extends StatelessWidget {
+class RestaurantItemWidget extends StatelessWidget {
   final Restaurant restaurant;
-  const RestaurantItem({Key? key, required this.restaurant}) : super(key: key);
+  const RestaurantItemWidget({Key? key, required this.restaurant})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

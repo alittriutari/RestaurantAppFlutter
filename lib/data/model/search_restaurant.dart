@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:restaurant_app/data/model/restaurant.dart';
 
-SearchResult searchResultFromJson(String str) => SearchResult.fromJson(json.decode(str));
+SearchResult searchResultFromJson(String str) =>
+    SearchResult.fromJson(json.decode(str));
 
 class SearchResult {
   SearchResult({
@@ -18,6 +19,7 @@ class SearchResult {
   factory SearchResult.fromJson(Map<String, dynamic> json) => SearchResult(
         error: json["error"],
         founded: json["founded"],
-        restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
+        restaurants: List<Restaurant>.from(
+            json["restaurants"].map((x) => Restaurant.fromJson(x))),
       );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/db_provider.dart';
+import 'package:restaurant_app/widget/restaurant_item_widget.dart';
 
 class FavoritePage extends StatelessWidget {
   static const routeName = '/favorite';
@@ -16,7 +17,8 @@ class FavoritePage extends StatelessWidget {
               return ListView.builder(
                 itemCount: value.favorite.length,
                 itemBuilder: (context, index) {
-                  return Text(value.favorite[index].name);
+                  return RestaurantItemWidget(
+                      restaurant: value.favorite[index]);
                 },
               );
             })));

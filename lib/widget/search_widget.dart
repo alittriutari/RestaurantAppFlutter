@@ -18,7 +18,8 @@ class SearchWidget extends StatelessWidget {
       title: '',
       fillColor: accentColor,
       onSubmit: (text) {
-        Provider.of<SearchProvider>(context, listen: false).searchRestaurant(searchCont.text);
+        Provider.of<SearchProvider>(context, listen: false)
+            .searchRestaurant(searchCont.text);
       },
       showTitle: false,
     );

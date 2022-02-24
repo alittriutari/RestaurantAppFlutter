@@ -1,7 +1,6 @@
 import 'package:path/path.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
-
-import '../data/model/favorite.dart';
 
 class DatabaseHelper {
   static DatabaseHelper? _databaseHelper;
@@ -18,33 +17,40 @@ class DatabaseHelper {
     return _database;
   }
 
-  static String _tableName = 'favorites';
+  static const String _tableName = 'favorites';
 
   Future<Database> _initializeDb() async {
     var path = await getDatabasesPath();
-    var db = openDatabase(join(path, 'favorite_db.db'), onCreate: (db, version) async {
-      await db.execute('''CREATE TABLE $_tableName (id TEXT PRIMARY KEY, name TEXT, pictureId TEXT, city TEXT, rating REAL, isFavorite INTEGER )''');
+    var db = openDatabase(join(path, 'favorite_db.db'),
+        onCreate: (db, version) async {
+      await db.execute(
+          '''CREATE TABLE $_tableName (id TEXT PRIMARY KEY, name TEXT, description TEXT, pictureId TEXT, city TEXT, rating REAL)''');
     }, version: 1);
     return db;
   }
 
-  Future<void> addFavorite(Favorite favorite) async {
+  Future<void> addFavorite(Restaurant restaurant) async {
     final Database db = await database;
-    await db.insert(_tableName, favorite.toMap());
-    print('added to favorite');
+    await db.insert(_tableName, restaurant.toJson());
   }
 
-  Future<List<Favorite>> getFavorite() async {
+  Future<List<Restaurant>> getFavorite() async {
     final Database db = await database;
     List<Map<String, dynamic>> results = await db.query(_tableName);
-    return results.map((e) => Favorite.fromMap(e)).toList();
+    // return results.map((e) => Favorite.fromMap(e)).toList();
+    return results.map((res) => Restaurant.fromJson(res)).toList();
   }
 
-  Future<Favorite> getFavoriteByRestaurantId(String id) async {
+  Future<Map> getFavoriteByRestaurantId(String id) async {
     final Database db = await database;
-    List<Map<String, dynamic>> results = await db.query(_tableName, where: 'id = ?', whereArgs: [id]);
-    print(results.map((e) => Favorite.fromMap(e)).first);
-    return results.map((e) => Favorite.fromMap(e)).first;
+    List<Map<String, dynamic>> results =
+        await db.query(_tableName, where: 'id = ?', whereArgs: [id]);
+
+    if (results.isNotEmpty) {
+      return results.first;
+    } else {
+      return {};
+    }
   }
 
   Future<void> deleteFavorite(String id) async {

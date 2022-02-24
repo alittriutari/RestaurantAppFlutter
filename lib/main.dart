@@ -22,8 +22,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => RestaurantProvider(apiService: ApiService())),
-        ChangeNotifierProvider(create: (context) => SearchProvider(apiService: ApiService())),
+        ChangeNotifierProvider(
+            create: (context) => RestaurantProvider(apiService: ApiService())),
+        ChangeNotifierProvider(
+            create: (context) => SearchProvider(apiService: ApiService())),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -36,8 +38,12 @@ class MyApp extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     primary: primaryColor,
                     onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)))),
-            colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100)))),
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: primaryColor,
+                secondary: secondaryColor,
+                onPrimary: Colors.white)),
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
           ListRestaurantPage.routeName: (context) => const HomePage(),

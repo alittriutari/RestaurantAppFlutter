@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/model/favorite.dart';
+
 import 'package:restaurant_app/data/model/restaurant.dart';
-import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/db_provider.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
-import 'package:restaurant_app/ui/add_review.dart';
-import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/utils/styles.dart';
-import 'package:restaurant_app/widget/review_item.dart';
+import 'package:restaurant_app/widget/detail_information_widget.dart';
+import 'package:restaurant_app/widget/menu_information_widget.dart';
+import 'package:restaurant_app/widget/review_widget.dart';
 
-class DetailRestaurantPage extends StatefulWidget {
+class DetailRestaurantPage extends StatelessWidget {
   static const routeName = '/detail-restaurant';
   final Restaurant restaurant;
   const DetailRestaurantPage({
@@ -21,17 +19,13 @@ class DetailRestaurantPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailRestaurantPage> createState() => _DetailRestaurantPageState();
-}
-
-class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
-  @override
   Widget build(BuildContext context) {
     double expandHeight = MediaQuery.of(context).size.height * 0.33;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) {
-          return DetailRestaurantProvider(apiService: ApiService(), id: widget.restaurant.id);
+          return DetailRestaurantProvider(
+              apiService: ApiService(), id: restaurant.id);
         }),
         ChangeNotifierProvider(create: (context) {
           return DbProvider();
@@ -39,8 +33,31 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
       ],
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Consumer<DetailRestaurantProvider>(
-          builder: (context, detail, child) {
+        body: DefaultTabController(
+          length: 3,
+          child: NestedScrollView(headerSliverBuilder:
+              (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              _sliverAppBar(
+                  expandHeight, innerBoxIsScrolled, restaurant.pictureId),
+              SliverPersistentHeader(
+                delegate: _SliverAppBarDelegate(
+                  const TabBar(
+                    labelColor: primaryColor,
+                    indicatorColor: primaryColor,
+                    unselectedLabelColor: darkGrey,
+                    tabs: [
+                      Tab(text: 'Description'),
+                      Tab(text: 'Menu'),
+                      Tab(text: 'Review'),
+                    ],
+                  ),
+                ),
+                pinned: true,
+              ),
+            ];
+          }, body: Consumer<DetailRestaurantProvider>(
+              builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.9,
@@ -50,36 +67,16 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
               );
             } else {
               if (detail.state == ResultState.hasData) {
-                return DefaultTabController(
-                  length: 3,
-                  child: NestedScrollView(
-                      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-                        return <Widget>[
-                          _sliverAppBar(expandHeight, innerBoxIsScrolled, detail),
-                          SliverPersistentHeader(
-                            delegate: _SliverAppBarDelegate(
-                              const TabBar(
-                                labelColor: primaryColor,
-                                indicatorColor: primaryColor,
-                                unselectedLabelColor: darkGrey,
-                                tabs: [
-                                  Tab(text: 'Description'),
-                                  Tab(text: 'Menu'),
-                                  Tab(text: 'Review'),
-                                ],
-                              ),
-                            ),
-                            pinned: true,
-                          ),
-                        ];
-                      },
-                      body: TabBarView(
-                        children: [
-                          _detailInfo(context, detail.detailResult.restaurant),
-                          _menuInfo(context, detail.detailResult.restaurant),
-                          _reviewTab(context),
-                        ],
-                      )),
+                return TabBarView(
+                  children: [
+                    DetailInformationWidget(
+                      restaurantItem: detail.detailResult.restaurant,
+                      restaurant: restaurant,
+                    ),
+                    MenuInformationWidget(
+                        restaurantItem: detail.detailResult.restaurant),
+                    const ReviewWidget()
+                  ],
                 );
               } else if (detail.state == ResultState.noData) {
                 return Center(child: Text(detail.message));
@@ -89,13 +86,14 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                 return const Text('');
               }
             }
-          },
+          })),
         ),
       ),
     );
   }
 
-  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, DetailRestaurantProvider detail) {
+  Widget _sliverAppBar(
+      double expandHeight, bool innerBoxIsScrolled, String urlImage) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -111,233 +109,14 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             alignment: Alignment.bottomRight,
             children: <Widget>[
               Hero(
-                tag: detail.detailResult.restaurant.pictureId,
+                tag: urlImage,
                 child: Image.network(
-                  ApiService.baseImageUrlLarge + detail.detailResult.restaurant.pictureId,
+                  ApiService.baseImageUrlLarge + urlImage,
                   fit: BoxFit.cover,
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _reviewTab(BuildContext context) {
-    return Consumer<DetailRestaurantProvider>(builder: (context, review, child) {
-      return SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        'Review',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      smallSpacing(),
-                      Text(
-                        '(${review.detailResult.restaurant.customerReviews.length} review)',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ],
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddReviewPage(restaurantItem: review.detailResult.restaurant)))
-                          .then((_) => setState(() {}));
-                    },
-                    child: const Text('Add Review'),
-                  ),
-                ],
-              ),
-              ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: review.detailResult.restaurant.customerReviews.length,
-                  itemBuilder: (context, index) {
-                    return ReviewItem(customerReview: review.detailResult.restaurant.customerReviews[index]);
-                  }),
-            ],
-          ),
-        ),
-      );
-    });
-  }
-
-  _detailInfo(BuildContext context, RestaurantItem restaurantItem) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(boxShadow: defaultBoxShadow(), color: Colors.white),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(child: Text(restaurantItem.name, style: Theme.of(context).textTheme.headline4)),
-                Consumer<DbProvider>(
-                  builder: (context, fav, child) {
-                    return FutureBuilder(
-                      future: fav.isFav(restaurantItem.id),
-                      builder: (context, snapshot) {
-                        print(snapshot.data);
-
-                        // final asd = snapshot.data ?? false;
-                        return IconButton(
-                            onPressed: () {
-                              print('hahah ' + fav.isFavorited.toString());
-                              if (fav.isFavorited == true) {
-                                fav.deleteFavorite(restaurantItem.id);
-                              } else {
-                                final result = Favorite(
-                                    id: restaurantItem.id,
-                                    name: restaurantItem.name,
-                                    pictureId: restaurantItem.pictureId,
-                                    city: restaurantItem.city,
-                                    rating: restaurantItem.rating,
-                                    isFavorite: 1);
-                                fav.addFavorite(result);
-                              }
-                            },
-                            icon: fav.isFavorited == true ? Icon(Icons.favorite) : Icon(Icons.favorite_border));
-                      },
-                    );
-                    // return FutureBuilder(
-                    //   future: fav.getFavoriteById(restaurantItem.id),
-                    //   builder: (context, snapshot) {
-                    //     var isFavorite = snapshot.data;
-                    //     return GestureDetector(
-                    //       onTap: () {
-                    // if (isFavorite == true) {
-                    //   fav.deleteFavorite(restaurantItem.id);
-                    // } else {
-                    //   final result = Favorite(
-                    //       id: restaurantItem.id,
-                    //       name: restaurantItem.name,
-                    //       pictureId: restaurantItem.pictureId,
-                    //       city: restaurantItem.city,
-                    //       rating: restaurantItem.rating,
-                    //       isFavorite: 1);
-                    //   fav.addFavorite(result);
-                    // }
-                    //         print(snapshot.data.);
-                    //         print(isFavorite.);
-                    //       },
-                    //       child: Container(
-                    //         height: 30,
-                    //         width: 30,
-                    //         color: isFavorite == true ? Colors.red : Colors.amber,
-                    //       ),
-                    //     );
-                    //   },
-                    // );
-                  },
-                )
-                // Consumer<DbProvider>(
-                //   builder: (context, fav, child) {
-                //     fav.getFavoriteById(restaurantItem.id).then((value) {
-                //       return IconButton(
-                //           onPressed: () {
-                //             fav.getFavoriteById(restaurantItem.id).then((value) {
-                //               if (value.isFavorite == 1) {
-                //                 fav.deleteFavorite(restaurantItem.id);
-                //               } else {
-                // final result = Favorite(
-                //     id: restaurantItem.id,
-                //     name: restaurantItem.name,
-                //     pictureId: restaurantItem.pictureId,
-                //     city: restaurantItem.city,
-                //     rating: restaurantItem.rating,
-                //     isFavorite: 1);
-                // fav.addFavorite(result);
-                //               }
-                //             });
-                //           },
-                //           icon: value.isFavorite == 1
-                //               ? const Icon(
-                //                   Icons.favorite,
-                //                   color: Colors.red,
-                //                 )
-                //               : const Icon(Icons.favorite_border));
-                //     });
-                //     return const SizedBox();
-                //   },
-                // )
-              ],
-            ),
-            smallSpacing(),
-            Row(
-              children: [
-                const Icon(Icons.location_on),
-                Text(restaurantItem.city, style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
-            smallSpacing(),
-            RatingBarIndicator(
-              rating: restaurantItem.rating,
-              itemCount: 5,
-              itemSize: 20,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, _) => const Icon(
-                Icons.star,
-                color: secondaryColor,
-              ),
-            ),
-            largeSpacing(),
-            Text(restaurantItem.description, style: Theme.of(context).textTheme.bodyText2),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _menuInfo(BuildContext context, RestaurantItem restaurantItem) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Menu', style: Theme.of(context).textTheme.headline6),
-            superLargeSpacing(),
-            Text('Food', style: Theme.of(context).textTheme.subtitle2),
-            largeSpacing(),
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const Divider(
-                color: accentColor,
-              ),
-              itemCount: restaurantItem.menus.foods.length,
-              itemBuilder: (context, index) {
-                return Text(restaurantItem.menus.foods[index].name);
-              },
-            ),
-            superLargeSpacing(),
-            Text('Drink', style: Theme.of(context).textTheme.subtitle2),
-            largeSpacing(),
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (context, index) => const Divider(
-                color: accentColor,
-              ),
-              itemCount: restaurantItem.menus.drinks.length,
-              itemBuilder: (context, index) {
-                return Text(restaurantItem.menus.drinks[index].name);
-              },
-            )
-          ],
         ),
       ),
     );
@@ -356,7 +135,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16),
       color: Colors.white,
