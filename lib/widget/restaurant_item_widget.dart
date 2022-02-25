@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
@@ -8,8 +9,7 @@ import 'package:restaurant_app/widget/custom_cache_image.dart';
 
 class RestaurantItemWidget extends StatelessWidget {
   final Restaurant restaurant;
-  const RestaurantItemWidget({Key? key, required this.restaurant})
-      : super(key: key);
+  const RestaurantItemWidget({Key? key, required this.restaurant}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,14 @@ class RestaurantItemWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailRestaurantPage(
-                  restaurant: restaurant,
-                ),
-              ));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => DetailRestaurantPage(
+          //         restaurant: restaurant,
+          //       ),
+          //     ));
+          Navigation.intentWithData(DetailRestaurantPage.routeName, restaurant);
         },
         child: Row(
           children: [
