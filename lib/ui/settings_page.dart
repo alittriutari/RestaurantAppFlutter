@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/styles.dart';
+import 'package:restaurant_app/provider/scheduling_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
@@ -11,16 +14,28 @@ class SettingsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
-          child: ListTile(
-            title: Text(
-              'Restaurant Notification',
-              style: Theme.of(context).textTheme.subtitle1,
+          child: Material(
+            child: ListTile(
+              title: Text(
+                'Restaurant Notification',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              subtitle: Text(
+                'Enable notifications',
+                style: Theme.of(context).textTheme.caption,
+              ),
+              trailing: Consumer<SchedulingProvider>(
+                  builder: (context, scheduled, _) {
+                return Switch.adaptive(
+                  value: scheduled.isScheduled,
+                  onChanged: (value) async {
+                    scheduled.scheduledRestaurant(value);
+                  },
+                  activeColor: secondaryColor,
+                  activeTrackColor: secondaryColor.withOpacity(0.5),
+                );
+              }),
             ),
-            subtitle: Text(
-              'Enable notifications',
-              style: Theme.of(context).textTheme.caption,
-            ),
-            trailing: Switch.adaptive(value: true, onChanged: (onChanged) {}),
           ),
         ),
       ),

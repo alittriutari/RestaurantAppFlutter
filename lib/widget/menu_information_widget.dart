@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 
 import '../utils/helper.dart';
-import '../utils/styles.dart';
+import '../common/styles.dart';
 
 class MenuInformationWidget extends StatelessWidget {
   final RestaurantItem restaurantItem;

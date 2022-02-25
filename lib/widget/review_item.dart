@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/common/styles.dart';
 
 class ReviewItem extends StatelessWidget {
   final CustomerReview customerReview;

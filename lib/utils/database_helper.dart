@@ -37,7 +37,6 @@ class DatabaseHelper {
   Future<List<Restaurant>> getFavorite() async {
     final Database db = await database;
     List<Map<String, dynamic>> results = await db.query(_tableName);
-    // return results.map((e) => Favorite.fromMap(e)).toList();
     return results.map((res) => Restaurant.fromJson(res)).toList();
   }
 

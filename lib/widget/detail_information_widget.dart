@@ -6,7 +6,7 @@ import 'package:restaurant_app/data/model/restaurant.dart';
 import '../data/model/restaurant_detail.dart';
 import '../provider/db_provider.dart';
 import '../utils/helper.dart';
-import '../utils/styles.dart';
+import '../common/styles.dart';
 
 class DetailInformationWidget extends StatelessWidget {
   final RestaurantItem restaurantItem;

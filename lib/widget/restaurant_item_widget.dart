@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/widget/custom_cache_image.dart';
 
 class RestaurantItemWidget extends StatelessWidget {

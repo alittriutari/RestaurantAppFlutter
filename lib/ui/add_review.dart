@@ -5,7 +5,7 @@ import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app/ui/list_restaurant.dart';
 import 'package:restaurant_app/utils/helper.dart';
-import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/widget/custom_textfield.dart';
 
 // ignore: must_be_immutable

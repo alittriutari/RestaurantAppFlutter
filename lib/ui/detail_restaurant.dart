@@ -8,7 +8,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/provider/db_provider.dart';
 import 'package:restaurant_app/provider/detail_restaurant_provider.dart';
-import 'package:restaurant_app/utils/styles.dart';
+import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/widget/custom_cache_image.dart';
 import 'package:restaurant_app/widget/detail_information_widget.dart';
 import 'package:restaurant_app/widget/menu_information_widget.dart';
