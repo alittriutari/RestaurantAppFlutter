@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/scheduling_provider.dart';
+import 'package:restaurant_app/widget/custom_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
@@ -24,12 +27,15 @@ class SettingsPage extends StatelessWidget {
                 'Enable notifications',
                 style: Theme.of(context).textTheme.caption,
               ),
-              trailing: Consumer<SchedulingProvider>(
-                  builder: (context, scheduled, _) {
+              trailing: Consumer<SchedulingProvider>(builder: (context, scheduled, _) {
                 return Switch.adaptive(
                   value: scheduled.isScheduled,
                   onChanged: (value) async {
-                    scheduled.scheduledRestaurant(value);
+                    if (Platform.isIOS) {
+                      customDialog(context);
+                    } else {
+                      scheduled.scheduledRestaurant(value);
+                    }
                   },
                   activeColor: secondaryColor,
                   activeTrackColor: secondaryColor.withOpacity(0.5),

@@ -17,13 +17,6 @@ class RestaurantItemWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: GestureDetector(
         onTap: () {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => DetailRestaurantPage(
-          //         restaurant: restaurant,
-          //       ),
-          //     ));
           Navigation.intentWithData(DetailRestaurantPage.routeName, restaurant);
         },
         child: Row(

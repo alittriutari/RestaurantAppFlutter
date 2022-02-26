@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 
 import 'package:restaurant_app/data/model/restaurant.dart';
@@ -28,8 +29,7 @@ class DetailRestaurantPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) {
-          return DetailRestaurantProvider(
-              apiService: ApiService(), id: restaurant.id);
+          return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
         }),
         ChangeNotifierProvider(create: (context) {
           return DbProvider();
@@ -39,11 +39,9 @@ class DetailRestaurantPage extends StatelessWidget {
         backgroundColor: Colors.white,
         body: DefaultTabController(
           length: 3,
-          child: NestedScrollView(headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) {
+          child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              _sliverAppBar(expandHeight, innerBoxIsScrolled,
-                  restaurant.pictureId, context),
+              _sliverAppBar(expandHeight, innerBoxIsScrolled, restaurant.pictureId, context),
               SliverPersistentHeader(
                 delegate: _SliverAppBarDelegate(
                   const TabBar(
@@ -60,8 +58,7 @@ class DetailRestaurantPage extends StatelessWidget {
                 pinned: true,
               ),
             ];
-          }, body: Consumer<DetailRestaurantProvider>(
-              builder: (context, detail, child) {
+          }, body: Consumer<DetailRestaurantProvider>(builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.9,
@@ -77,8 +74,7 @@ class DetailRestaurantPage extends StatelessWidget {
                       restaurantItem: detail.detailResult.restaurant,
                       restaurant: restaurant,
                     ),
-                    MenuInformationWidget(
-                        restaurantItem: detail.detailResult.restaurant),
+                    MenuInformationWidget(restaurantItem: detail.detailResult.restaurant),
                     const ReviewWidget()
                   ],
                 );
@@ -96,8 +92,7 @@ class DetailRestaurantPage extends StatelessWidget {
     );
   }
 
-  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled,
-      String urlImage, BuildContext context) {
+  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, String urlImage, BuildContext context) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -109,7 +104,7 @@ class DetailRestaurantPage extends StatelessWidget {
       leading: IconButton(
         icon: Icon(Platform.isIOS ? CupertinoIcons.back : Icons.arrow_back),
         onPressed: () {
-          Navigator.pop(context);
+          Navigation.back();
         },
       ),
       flexibleSpace: FlexibleSpaceBar(
@@ -147,8 +142,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16),
       color: Colors.white,

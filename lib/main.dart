@@ -9,6 +9,7 @@ import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
+import 'package:restaurant_app/ui/add_review.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
 import 'package:restaurant_app/ui/favorite_page.dart';
 import 'package:restaurant_app/ui/home_page.dart';
@@ -58,10 +59,7 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(elevation: 0),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10),
-                    primary: primaryColor,
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)))),
+                    padding: const EdgeInsets.all(10), primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)))),
             colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
@@ -69,7 +67,8 @@ class MyApp extends StatelessWidget {
           SearchPage.routeName: (context) => const SearchPage(),
           FavoritePage.routeName: (context) => const FavoritePage(),
           SettingsPage.routeName: (context) => const SettingsPage(),
-          DetailRestaurantPage.routeName: ((context) => DetailRestaurantPage(restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant))
+          AddReviewPage.routeName: (context) => AddReviewPage(restaurantItem: ModalRoute.of(context)?.settings.arguments as RestaurantItem),
+          DetailRestaurantPage.routeName: (context) => DetailRestaurantPage(restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant)
         },
       ),
     );
