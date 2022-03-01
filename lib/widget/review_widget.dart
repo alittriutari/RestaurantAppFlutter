@@ -12,7 +12,8 @@ class ReviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DetailRestaurantProvider>(builder: (context, review, child) {
+    return Consumer<DetailRestaurantProvider>(
+        builder: (context, review, child) {
       return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -37,7 +38,8 @@ class ReviewWidget extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigation.intentWithData(AddReviewPage.routeName, review.detailResult.restaurant);
+                      Navigation.intentWithData(AddReviewPage.routeName,
+                          review.detailResult.restaurant);
                     },
                     child: const Text('Add Review'),
                   ),
@@ -46,9 +48,12 @@ class ReviewWidget extends StatelessWidget {
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: review.detailResult.restaurant.customerReviews.length,
+                  itemCount:
+                      review.detailResult.restaurant.customerReviews.length,
                   itemBuilder: (context, index) {
-                    return ReviewItem(customerReview: review.detailResult.restaurant.customerReviews[index]);
+                    return ReviewItem(
+                        customerReview: review
+                            .detailResult.restaurant.customerReviews[index]);
                   }),
             ],
           ),

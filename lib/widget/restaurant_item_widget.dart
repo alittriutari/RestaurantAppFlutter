@@ -9,7 +9,8 @@ import 'package:restaurant_app/widget/custom_cache_image.dart';
 
 class RestaurantItemWidget extends StatelessWidget {
   final Restaurant restaurant;
-  const RestaurantItemWidget({Key? key, required this.restaurant}) : super(key: key);
+  const RestaurantItemWidget({Key? key, required this.restaurant})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

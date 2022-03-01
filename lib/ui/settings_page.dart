@@ -27,7 +27,8 @@ class SettingsPage extends StatelessWidget {
                 'Enable notifications',
                 style: Theme.of(context).textTheme.caption,
               ),
-              trailing: Consumer<SchedulingProvider>(builder: (context, scheduled, _) {
+              trailing: Consumer<SchedulingProvider>(
+                  builder: (context, scheduled, _) {
                 return Switch.adaptive(
                   value: scheduled.isScheduled,
                   onChanged: (value) async {

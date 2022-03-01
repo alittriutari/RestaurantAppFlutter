@@ -22,7 +22,8 @@ import 'package:restaurant_app/utils/notification_helper.dart';
 import 'common/styles.dart';
 import 'data/model/restaurant.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,8 +48,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => RestaurantProvider(apiService: ApiService())),
-        ChangeNotifierProvider(create: (context) => SearchProvider(apiService: ApiService())),
+        ChangeNotifierProvider(
+            create: (context) => RestaurantProvider(apiService: ApiService())),
+        ChangeNotifierProvider(
+            create: (context) => SearchProvider(apiService: ApiService())),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -59,16 +62,27 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(elevation: 0),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10), primary: primaryColor, onPrimary: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)))),
-            colorScheme: Theme.of(context).colorScheme.copyWith(primary: primaryColor, secondary: secondaryColor, onPrimary: Colors.white)),
+                    padding: const EdgeInsets.all(10),
+                    primary: primaryColor,
+                    onPrimary: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100)))),
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: primaryColor,
+                secondary: secondaryColor,
+                onPrimary: Colors.white)),
         routes: {
           SplashPage.routeName: (context) => const SplashPage(),
           ListRestaurantPage.routeName: (context) => const HomePage(),
           SearchPage.routeName: (context) => const SearchPage(),
           FavoritePage.routeName: (context) => const FavoritePage(),
           SettingsPage.routeName: (context) => const SettingsPage(),
-          AddReviewPage.routeName: (context) => AddReviewPage(restaurantItem: ModalRoute.of(context)?.settings.arguments as RestaurantItem),
-          DetailRestaurantPage.routeName: (context) => DetailRestaurantPage(restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant)
+          AddReviewPage.routeName: (context) => AddReviewPage(
+              restaurantItem:
+                  ModalRoute.of(context)?.settings.arguments as RestaurantItem),
+          DetailRestaurantPage.routeName: (context) => DetailRestaurantPage(
+              restaurant:
+                  ModalRoute.of(context)?.settings.arguments as Restaurant)
         },
       ),
     );
