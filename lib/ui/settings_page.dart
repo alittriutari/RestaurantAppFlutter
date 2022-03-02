@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/provider/scheduling_provider.dart';
 import 'package:restaurant_app/widget/custom_dialog.dart';
+import '../provider/preferences_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
@@ -27,20 +28,24 @@ class SettingsPage extends StatelessWidget {
                 'Enable notifications',
                 style: Theme.of(context).textTheme.caption,
               ),
-              trailing: Consumer<SchedulingProvider>(
-                  builder: (context, scheduled, _) {
-                return Switch.adaptive(
-                  value: scheduled.isScheduled,
-                  onChanged: (value) async {
-                    if (Platform.isIOS) {
-                      customDialog(context);
-                    } else {
-                      scheduled.scheduledRestaurant(value);
-                    }
-                  },
-                  activeColor: secondaryColor,
-                  activeTrackColor: secondaryColor.withOpacity(0.5),
-                );
+              trailing:
+                  Consumer<PreferencesProvider>(builder: (context, daily, _) {
+                return Consumer<SchedulingProvider>(
+                    builder: (context, scheduled, child) {
+                  return Switch.adaptive(
+                    value: daily.isDailyRestaurantActive,
+                    onChanged: (value) async {
+                      if (Platform.isIOS) {
+                        customDialog(context);
+                      } else {
+                        scheduled.scheduledRestaurant(value);
+                        daily.enableDailyRestaurant(value);
+                      }
+                    },
+                    activeColor: secondaryColor,
+                    activeTrackColor: secondaryColor.withOpacity(0.5),
+                  );
+                });
               }),
             ),
           ),

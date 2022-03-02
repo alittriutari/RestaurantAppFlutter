@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/preferences_provider.dart';
 import 'package:restaurant_app/provider/restaurant_provider.dart';
+import 'package:restaurant_app/provider/scheduling_provider.dart';
 import 'package:restaurant_app/provider/search_provider.dart';
 import 'package:restaurant_app/ui/add_review.dart';
 import 'package:restaurant_app/ui/detail_restaurant.dart';
@@ -19,6 +21,8 @@ import 'package:restaurant_app/ui/settings_page.dart';
 import 'package:restaurant_app/ui/splash.dart';
 import 'package:restaurant_app/utils/background_service.dart';
 import 'package:restaurant_app/utils/notification_helper.dart';
+import 'package:restaurant_app/utils/preferences_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'common/styles.dart';
 import 'data/model/restaurant.dart';
 
@@ -52,6 +56,11 @@ class MyApp extends StatelessWidget {
             create: (context) => RestaurantProvider(apiService: ApiService())),
         ChangeNotifierProvider(
             create: (context) => SearchProvider(apiService: ApiService())),
+        ChangeNotifierProvider(create: (context) => SchedulingProvider()),
+        ChangeNotifierProvider(
+            create: (context) => PreferencesProvider(
+                preferencesHelper: PreferencesHelper(
+                    sharedPreferences: SharedPreferences.getInstance()))),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
