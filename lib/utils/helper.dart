@@ -17,3 +17,5 @@ Widget largeSpacing() => const SizedBox(
 Widget superLargeSpacing() => const SizedBox(
       height: 24,
     );
+
+enum ResultState { loading, noData, hasData, error }

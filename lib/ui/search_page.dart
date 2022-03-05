@@ -5,7 +5,6 @@ import 'package:restaurant_app/utils/helper.dart';
 import 'package:restaurant_app/widget/restaurant_item_widget.dart';
 import 'package:restaurant_app/widget/search_widget.dart';
 
-// ignore: must_be_immutable
 class SearchPage extends StatelessWidget {
   static const routeName = '/search';
   const SearchPage({Key? key}) : super(key: key);
@@ -22,7 +21,7 @@ class SearchPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SearchWidget(),
+              const SearchWidget(),
               largeSpacing(),
               Consumer<SearchProvider>(builder: (context, search, _) {
                 if (search.state == ResultState.loading) {

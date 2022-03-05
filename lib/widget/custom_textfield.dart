@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/utils/helper.dart';
 
-// ignore: must_be_immutable
 class CustomTextfield extends StatelessWidget {
-  CustomTextfield({
+  const CustomTextfield({
     Key? key,
     required this.controller,
     required this.hintText,
@@ -19,8 +18,8 @@ class CustomTextfield extends StatelessWidget {
   final String title;
   final Color fillColor;
   final Function(String text) onSubmit;
-  bool showTitle;
-  int maxLines;
+  final bool showTitle;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {

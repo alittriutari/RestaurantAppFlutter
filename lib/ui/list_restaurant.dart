@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 
 import '../provider/restaurant_provider.dart';
+import '../utils/helper.dart';
 import '../utils/platform_widget.dart';
 import '../widget/restaurant_item_widget.dart';
 
@@ -18,15 +19,8 @@ class ListRestaurantPage extends StatelessWidget {
 
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Restaurant List'),
-          actions: [
-            IconButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, SearchPage.routeName),
-                icon: const Icon(Icons.search))
-          ]),
+      appBar:
+          AppBar(centerTitle: true, title: const Text('Restaurant List'), actions: [IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search))]),
       body: _buildList(context),
     );
   }
@@ -35,9 +29,7 @@ class ListRestaurantPage extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: const Text('Restaurant List'),
-        trailing: IconButton(
-            onPressed: () => Navigator.pushNamed(context, SearchPage.routeName),
-            icon: const Icon(Icons.search)),
+        trailing: IconButton(onPressed: () => Navigator.pushNamed(context, SearchPage.routeName), icon: const Icon(Icons.search)),
       ),
       child: _buildList(context),
     );
@@ -49,13 +41,11 @@ class ListRestaurantPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child:
-              Text('Restaurant', style: Theme.of(context).textTheme.headline4),
+          child: Text('Restaurant', style: Theme.of(context).textTheme.headline4),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
-          child: Text('Recommendation restaurant for you!',
-              style: Theme.of(context).textTheme.subtitle2),
+          child: Text('Recommendation restaurant for you!', style: Theme.of(context).textTheme.subtitle2),
         ),
         Consumer<RestaurantProvider>(
           builder: (context, state, _) {
@@ -69,8 +59,7 @@ class ListRestaurantPage extends StatelessWidget {
             } else {
               if (state.state == ResultState.hasData) {
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height +
-                      AppBar().preferredSize.height,
+                  height: MediaQuery.of(context).size.height + AppBar().preferredSize.height,
                   child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     shrinkWrap: true,

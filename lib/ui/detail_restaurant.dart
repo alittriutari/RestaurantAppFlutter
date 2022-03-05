@@ -15,6 +15,8 @@ import 'package:restaurant_app/widget/detail_information_widget.dart';
 import 'package:restaurant_app/widget/menu_information_widget.dart';
 import 'package:restaurant_app/widget/review_widget.dart';
 
+import '../utils/helper.dart';
+
 class DetailRestaurantPage extends StatelessWidget {
   static const routeName = '/detail-restaurant';
   final Restaurant restaurant;
@@ -29,8 +31,7 @@ class DetailRestaurantPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) {
-          return DetailRestaurantProvider(
-              apiService: ApiService(), id: restaurant.id);
+          return DetailRestaurantProvider(apiService: ApiService(), id: restaurant.id);
         }),
         ChangeNotifierProvider(create: (context) {
           return DbProvider();
@@ -40,11 +41,9 @@ class DetailRestaurantPage extends StatelessWidget {
         backgroundColor: Colors.white,
         body: DefaultTabController(
           length: 3,
-          child: NestedScrollView(headerSliverBuilder:
-              (BuildContext context, bool innerBoxIsScrolled) {
+          child: NestedScrollView(headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              _sliverAppBar(expandHeight, innerBoxIsScrolled,
-                  restaurant.pictureId, context),
+              _sliverAppBar(expandHeight, innerBoxIsScrolled, restaurant.pictureId, context),
               SliverPersistentHeader(
                 delegate: _SliverAppBarDelegate(
                   const TabBar(
@@ -61,8 +60,7 @@ class DetailRestaurantPage extends StatelessWidget {
                 pinned: true,
               ),
             ];
-          }, body: Consumer<DetailRestaurantProvider>(
-              builder: (context, detail, child) {
+          }, body: Consumer<DetailRestaurantProvider>(builder: (context, detail, child) {
             if (detail.state == ResultState.loading) {
               return SizedBox(
                 height: MediaQuery.of(context).size.height * 0.9,
@@ -78,8 +76,7 @@ class DetailRestaurantPage extends StatelessWidget {
                       restaurantItem: detail.detailResult.restaurant,
                       restaurant: restaurant,
                     ),
-                    MenuInformationWidget(
-                        restaurantItem: detail.detailResult.restaurant),
+                    MenuInformationWidget(restaurantItem: detail.detailResult.restaurant),
                     const ReviewWidget()
                   ],
                 );
@@ -97,8 +94,7 @@ class DetailRestaurantPage extends StatelessWidget {
     );
   }
 
-  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled,
-      String urlImage, BuildContext context) {
+  Widget _sliverAppBar(double expandHeight, bool innerBoxIsScrolled, String urlImage, BuildContext context) {
     return SliverAppBar(
       expandedHeight: expandHeight,
       floating: true,
@@ -148,8 +144,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16),
       color: Colors.white,
