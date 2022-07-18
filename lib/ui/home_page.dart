@@ -32,16 +32,9 @@ class _HomePageState extends State<HomePage> {
   ];
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
-    BottomNavigationBarItem(
-        icon: Icon(Platform.isIOS ? CupertinoIcons.home : Icons.home),
-        label: 'Home'),
-    BottomNavigationBarItem(
-        icon: Icon(
-            Platform.isIOS ? CupertinoIcons.heart_circle_fill : Icons.favorite),
-        label: 'Favorite'),
-    BottomNavigationBarItem(
-        icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
-        label: 'Settings')
+    BottomNavigationBarItem(icon: Icon(Platform.isIOS ? CupertinoIcons.home : Icons.home), label: 'Home'),
+    BottomNavigationBarItem(icon: Icon(Platform.isIOS ? CupertinoIcons.heart_circle_fill : Icons.favorite), label: 'Favorite'),
+    BottomNavigationBarItem(icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings), label: 'Settings')
   ];
 
   @override

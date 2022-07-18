@@ -13,7 +13,7 @@ customDialog(BuildContext context) {
         builder: (context) {
           return CupertinoAlertDialog(
             title: const Text('Coming soon'),
-            content: const Text('This feature will be coming soon!'),
+            content: const Text('This feature will be coming soon on IOS!'),
             actions: [
               CupertinoDialogAction(
                 child: const Text('OK'),
@@ -30,7 +30,7 @@ customDialog(BuildContext context) {
       builder: (context) {
         return AlertDialog(
           title: const Text('Coming Soon!'),
-          content: const Text('This feature will be coming soon!'),
+          content: const Text('This feature will be coming soon on IOS!'),
           actions: [
             TextButton(
               onPressed: () {
