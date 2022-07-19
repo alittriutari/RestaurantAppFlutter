@@ -15,4 +15,3 @@ Discover restaurant, search restaurant, write a review, add to favorite and show
 * Simple animation using Hero
 * Scheduling and showing notification
 * Local storage using shared preferences and sqflite
-* Continuous Integration using Codemagic (https://codemagic.io/)
