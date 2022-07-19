@@ -11,6 +11,7 @@ Discover restaurant, search restaurant, write a review, add to favorite and show
 ## Core concepts this project used
 
 * State Management using Provider
+* Adaptive widget
 * Unit Testing
 * Simple animation using Hero
 * Scheduling and showing notification
