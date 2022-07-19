@@ -1,16 +1,14 @@
-# restaurant_app
+# Restaurant App
 
-A new Flutter project.
+Discover restaurant, search restaurant, write a review, add to favorite and showing notification with scheduling
 
-## Getting Started
+![Group 1](https://user-images.githubusercontent.com/29432760/179778572-bba7adee-da2d-47fb-90c4-aed17ef73d5c.png)
 
-This project is a starting point for a Flutter application.
+## Core concepts this project used
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* State Management using Provider
+* Unit Testing
+* Simple animation using Hero
+* Scheduling and showing notification
+* Local storage using shared preferences and sqflite
+* Continuous Integration using Codemagic (https://codemagic.io/)
